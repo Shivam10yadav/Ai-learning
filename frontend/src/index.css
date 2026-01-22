@@ -10,8 +10,12 @@
 @layer base{
   html{
     font-family: var(--font-display);
+
   }
   body{
     background-color: #fcfbfc;
   }
+}
+html {
+  scroll-behavior: smooth;
 }

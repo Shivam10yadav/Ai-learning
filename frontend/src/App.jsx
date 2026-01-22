@@ -1,6 +1,7 @@
 import React from 'react'
 import {BrowserRouter as Router,Routes,Route,Navigate} from 'react-router-dom'
 import NotFoundPage from './pages/NotFoundPage'
+import HomePage from './pages/Home/HomePage'
 import LoginPage from './pages/Auth/LoginPage'
 import RegisterPage from './pages/Auth/RegisterPage'
 import DashboardPage from './pages/Dashboard/DashboardPage'
@@ -11,9 +12,10 @@ import QuizTakePage from './pages/Quizzes/QuizTakePage'
 import QuizResultPage from './pages/Quizzes/QuizResultPage'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import ProfilePage from './pages/Profile/ProfilePage'
+
 const App = () => {
-  const isAuthenticated=false
-  const loading=false
+  const isAuthenticated = false
+  const loading = false
 
   if(loading){
     return(
@@ -22,32 +24,37 @@ const App = () => {
     </div>
     )
   }
+  
   return (
     <Router>
       <Routes>
-        <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" replace/> : <Navigate to="/login" replace/>}/>
+        {/* Public Home/Landing Page */}
+        <Route path="/" element={<HomePage />} />
         
-        <Route path='/login' element={<LoginPage/>}/>
-        <Route path='/register' element={<RegisterPage/>}/>
+        {/* Auth Routes - will redirect to dashboard if already authenticated */}
+        <Route 
+          path='/login' 
+          element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />} 
+        />
+        <Route 
+          path='/register' 
+          element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <RegisterPage />} 
+        />
 
+        {/* Protected Routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/documents" element={<DocumentListPage />} />
+          <Route path="/documents/:id" element={<DocumentDetailPage />} />
+          <Route path="/documents/:id/flashcards" element={<FlashcardPage />} />
+          <Route path="/quizzes/:quizId/attempt" element={<QuizTakePage/>} />
+          <Route path="/quizzes/:quizId/results" element={<QuizResultPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Route>
 
-{/* Protected Routes */}
-<Route element={<ProtectedRoute />}>
-  <Route path="/dashboard" element={<DashboardPage />} />
-  <Route path="/documents" element={<DocumentListPage />} />
-  <Route path="/documents/:id" element={<DocumentDetailPage />} />
-  <Route path="/documents/:id/flashcards" element={<FlashcardPage />} />
-  <Route path="/quizzes/:quizId/attempt" element={<QuizTakePage/>} />
-  <Route path="/quizzes/:quizId/results" element={<QuizResultPage />} />
-  <Route path="/profile" element={<ProfilePage />} />
-</Route>
-
-
+        {/* 404 Page */}
         <Route path='*' element={<NotFoundPage/>}/>
-
-        
       </Routes>
-    
     </Router>
   )
 }
