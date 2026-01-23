@@ -22,7 +22,7 @@ const userSchema=new mongoose.Schema({
         minlength:[6,'Password must be at least 6 characters long'],
         select:false
     },
-    ProfileImage:{
+    profileImage:{
         type:String,
         default:null
     }
@@ -43,8 +43,11 @@ userSchema.pre('save',async function (next) {
 })
 //compare password
 
-userSchema.methods.matchPassword=async function(enteredPassword){
-return await bcrypt.compare(enteredPassword,this.password)
+userSchema.methods.matchPassword = async function(enteredPassword) {
+
+  const result = await bcrypt.compare(enteredPassword, this.password);
+ 
+  return result;
 }
 
 const User=mongoose.model('User',userSchema)
