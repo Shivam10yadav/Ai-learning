@@ -140,7 +140,7 @@ export const getProfile=async(req,res,next)=>{
         res.status(200).json({
             success:true,
             data:{
-                id:iser._id,
+                id:user._id,
                 username:user.username,
                 email:user.email,
                 profileImage:user.profileImage,
@@ -168,7 +168,7 @@ export const updateProfile=async(req,res,next)=>{
         if(email) user.email=email;
         if(profileImage) user.profileImage=profileImage;
 
-        await user.Save()
+        await user.save()
 
         res.status(200).json({
             success:true,
@@ -176,7 +176,7 @@ export const updateProfile=async(req,res,next)=>{
                 id:user._id,
                 username:user.username,
                 email:user.email,
-                profileImage:iser.profileImage,
+                profileImage:user.profileImage,
             },
             message:"Profile Upadted Successfully"
         })
@@ -218,7 +218,7 @@ export const changePassword=async(req,res,next)=>{
 
         //update password
         user.password=newPassword
-        await user.Save()
+        await user.save()
 
         res.status(200).json({
             success:true,
