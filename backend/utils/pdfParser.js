@@ -1,4 +1,4 @@
-import { PDFParser } from "pdf-parse";
+import { PDFParse } from "pdf-parse";
 import fs from 'fs/promises'
 
 /**
