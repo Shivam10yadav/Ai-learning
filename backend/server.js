@@ -8,6 +8,7 @@ import connectDB from './config/db.js'
 import errorHandler from "./middleware/errorHandler.js"
 import authRoutes from './routes/authRoutes.js'
 import documentRoutes   from './routes/documentRoutes.js'
+import flashcardRoutes   from './routes/flashcardRoutes.js'
 
 dotenv.config()
 
@@ -43,6 +44,7 @@ app.use(express.urlencoded({extended:true}));
 
 app.use('/api/auth',authRoutes)
 app.use('/api/documents',documentRoutes)
+app.use('/api/flashcards',flashcardRoutes)
 
 app.use(errorHandler)
 
@@ -59,7 +61,7 @@ res.status(404).json({
 
 const PORT=process.env.PORT || 8000
 app.listen(PORT,()=>{
-    console.log(`SErver running in ${process.env.NODE_ENV} mode on port ${PORT}`)
+    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
     
 })
 
