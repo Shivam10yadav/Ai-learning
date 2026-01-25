@@ -41,6 +41,17 @@ export const generateSummary=async(req,res,next)=>{
     }
 }
 
+//desc chat with document
+// routes post /api/ai/chat
+// access private
+
+export const chat=async(req,res,next)=>{
+    try {
+        
+    } catch (error) {
+        next(error)
+    }
+}
 //desc explain concept from document
 // routes post /api/ai/explain-conecpt
 // access private
