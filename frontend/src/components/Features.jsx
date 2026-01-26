@@ -3,34 +3,34 @@ import React from 'react'
 const Features = () => {
  const featuresData = [
         {
-            icon: <svg className='text-white' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12 2 2 4-4" /></svg>,
-            title: "Task Automation",
-            description: "Let AI handle the repetitive, time-consuming tasks so your team can stay focused on business growth."
+            icon: <svg className='text-white' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>,
+            title: "AI Summaries",
+            description: "Upload any PDF and get instant, comprehensive summaries that capture key concepts and main ideas in seconds."
         },
         {
-            icon: <svg className='text-white' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /><path d="M12 7v5l4 2" /></svg>,
-            title: "Real-Time Monitoring",
-            description: "Empower your business by letting AI take over repetitive tasks and freeing your team for high impact work."
+            icon: <svg className='text-white' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h.01"/><path d="M17 7h.01"/><path d="M7 17h.01"/><path d="M17 17h.01"/></svg>,
+            title: "Smart Flashcards",
+            description: "Automatically generated flashcards from your documents help reinforce learning and improve memory retention."
         },
         {
-            icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 7.9999C20.9996 7.64918 20.9071 7.30471 20.7315 7.00106C20.556 6.69742 20.3037 6.44526 20 6.2699L13 2.2699C12.696 2.09437 12.3511 2.00195 12 2.00195C11.6489 2.00195 11.304 2.09437 11 2.2699L4 6.2699C3.69626 6.44526 3.44398 6.69742 3.26846 7.00106C3.09294 7.30471 3.00036 7.64918 3 7.9999V15.9999C3.00036 16.3506 3.09294 16.6951 3.26846 16.9987C3.44398 17.3024 3.69626 17.5545 4 17.7299L11 21.7299C11.304 21.9054 11.6489 21.9979 12 21.9979C12.3511 21.9979 12.696 21.9054 13 21.7299L20 17.7299C20.3037 17.5545 20.556 17.3024 20.7315 16.9987C20.9071 16.6951 20.9996 16.3506 21 15.9999V7.9999Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /><path d="M3.29999 7L12 12L20.7 7" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /><path d="M12 22V12" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>,
-            title: "Context Awareness",
-            description: "AI takes care of the repetitive stuff, so your team can focus on growth and delivering results that matter."
+            icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 11l3 3L22 4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+            title: "Adaptive Quizzes",
+            description: "AI-generated quizzes test your knowledge and adapt to your learning pace, ensuring you master every topic."
         },
         {
-            icon: <svg className='text-white' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></svg>,
-            title: "Resource Optimization",
-            description: "Empower your business by letting AI take over repetitive tasks and freeing team for high impact work."
+            icon: <svg className='text-white' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>,
+            title: "Multi-Format Support",
+            description: "Upload PDFs, textbooks, research papers, or lecture notes - our AI understands them all."
         },
         {
-            icon: <svg className='text-white' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg>,
-            title: "Role-Based Access",
-            description: "Free your team from manual, repetitive work. Let AI automate the busywork while you focus on scaling."
+            icon: <svg className='text-white' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M12 2v2"/><path d="M12 22v-2"/><path d="m17 20.66-1-1.73"/><path d="M11 10.27 7 3.34"/><path d="m20.66 17-1.73-1"/><path d="m3.34 7 1.73 1"/><path d="M14 12h8"/><path d="M2 12h2"/><path d="m20.66 7-1.73 1"/><path d="m3.34 17 1.73-1"/><path d="m17 3.34-1 1.73"/><path d="m11 13.73-4 6.93"/></svg>,
+            title: "Study Insights",
+            description: "Track your progress, identify weak areas, and get personalized recommendations to optimize your learning journey."
         },
         {
-            icon: <svg className='text-white' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1" /><path d="m12 15 5 6H7Z" /></svg>,
-            title: "AI-Agent Collaboration",
-            description: "Let AI handle the repetitive, time-consuming tasks so your team can stay focused on business growth."
+            icon: <svg className='text-white' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>,
+            title: "24/7 AI Tutor",
+            description: "Ask questions about your materials anytime and get instant, detailed explanations to deepen your understanding."
         }
     ];
 
@@ -44,16 +44,36 @@ const Features = () => {
                 }`}
             </style>
 
-            <section id="features" className="py-20 px-4 bg-black text-white flex flex-col justify-center items-center gap-6">
-                <button className='px-4 h-8 border border-green-900 bg-green-950 text-slate-50 text-xs rounded-lg'>Features</button>
-                <h2 className="text-3xl md:text-[40px]/12 font-medium text-slate-50 max-w-lg text-center leading-tight">AI Agents That Automate and Accelerate Growth.</h2>
-                <p className='text-base/7 text-slate-200 max-w-xl text-center'>Streamline operations, boost productivity, and scale effortlessly - all powered by intelligent automation.</p>
+            <section id="features" className="relative py-20 px-4 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white flex flex-col justify-center items-center gap-6 overflow-hidden">
+                {/* Background Effects */}
+                <div className="absolute inset-0 -z-10">
+                    <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+                    <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+                </div>
+
+                <button className='px-4 h-8 border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 text-xs rounded-lg hover:border-cyan-500/50 hover:bg-cyan-500/20 transition-all duration-300'>
+                    Features
+                </button>
+                <h2 className="text-3xl md:text-[40px]/12 font-semibold text-slate-50 max-w-2xl text-center leading-tight">
+                    Transform Any PDF Into Your Personal Study Guide
+                </h2>
+                <p className='text-base/7 text-slate-400 max-w-2xl text-center'>
+                    Upload, learn, and master any subject with AI-powered summaries, flashcards, and quizzes designed for how you learn best.
+                </p>
                 <div className="relative max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                     {featuresData.map((feature, index) => (
-                        <div key={index} className='bg-green-950 border border-green-900 rounded-lg p-6 space-y-3 hover:-translate-y-1 transition duration-300'>
-                            {feature.icon}
-                            <p className='font-medium text-lg text-slate-50'>{feature.title}</p>
-                            <p className='text-sm/5 text-slate-200'>{feature.description}</p>
+                        <div 
+                            key={index} 
+                            className='group relative bg-slate-900/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6 space-y-3 hover:-translate-y-2 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/20'
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-blue-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                    {feature.icon}
+                                </div>
+                                <p className='font-semibold text-lg text-slate-50 mt-4'>{feature.title}</p>
+                                <p className='text-sm/6 text-slate-400'>{feature.description}</p>
+                            </div>
                         </div>
                     ))}
                 </div>
