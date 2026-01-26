@@ -29,7 +29,7 @@ const quizSchema=new mongoose.Schema({
             type:String,
             required:true,
         },
-        explaination:{
+        explanation:{
             type:String,
             default:""
         },
