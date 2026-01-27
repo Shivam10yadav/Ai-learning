@@ -1,7 +1,6 @@
 import React from 'react'
 import {BrowserRouter as Router,Routes,Route,Navigate} from 'react-router-dom'
 import NotFoundPage from './pages/NotFoundPage'
-import HomePage from './pages/Home/HomePage'
 import LoginPage from './pages/Auth/LoginPage'
 import RegisterPage from './pages/Auth/RegisterPage'
 import DashboardPage from './pages/Dashboard/DashboardPage'
@@ -12,10 +11,10 @@ import QuizTakePage from './pages/Quizzes/QuizTakePage'
 import QuizResultPage from './pages/Quizzes/QuizResultPage'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import ProfilePage from './pages/Profile/ProfilePage'
+import { useAuth } from './context/AuthContext'
 
 const App = () => {
-  const isAuthenticated = false
-  const loading = false
+const{isAuthenticated,loading}=useAuth()
 
   if(loading){
     return(
@@ -28,18 +27,9 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        {/* Public Home/Landing Page */}
-        <Route path="/" element={<HomePage />} />
-        
-        {/* Auth Routes - will redirect to dashboard if already authenticated */}
-        <Route 
-          path='/login' 
-          element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />} 
-        />
-        <Route 
-          path='/register' 
-          element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <RegisterPage />} 
-        />
+      <Route path='/' element={isAuthenticated ? <Navigate to='/dashboard' replace/> : <Navigate to='/login' replace/>}/>
+      <Route path='/login' element={isAuthenticated ? <Navigate to='/dashboard' replace/> : <LoginPage/>}/>
+      <Route path='/register' element={isAuthenticated ? <Navigate to='/dashboard' replace/> : <RegisterPage/>}/>
 
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>

@@ -1,9 +1,9 @@
 import React from 'react'
 
-const ProfilePage = () => {
+const ProtectedRoute = () => {
   return (
-    <div>ProfilePage</div>
+    <div>ProtectedRoute</div>
   )
 }
 
-export default ProfilePage
+export default ProtectedRoute
