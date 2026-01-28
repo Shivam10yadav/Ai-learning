@@ -34,7 +34,7 @@ const deleteDocument = async (id) => {
 
 const getDocumentById = async (id) => {
   try {
-    const response = await axiosInstance.delete(API_PATHS.DOCUMENTS.GET_DOCUMENT_BY_ID(id));
+    const response = await axiosInstance.get(API_PATHS.DOCUMENTS.GET_DOCUMENT_BY_ID(id));
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Failed to delete document' };
@@ -44,3 +44,5 @@ const getDocumentById = async (id) => {
 const documentService={
     getDocuments,uploadDocument,deleteDocument,getDocumentById
 }
+
+export default documentService;
