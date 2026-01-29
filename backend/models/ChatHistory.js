@@ -22,7 +22,7 @@ const chatHistorySchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-      timestamps:{
+      timestamp:{
         type:Date,
         default:Date.now
       },
@@ -33,7 +33,7 @@ const chatHistorySchema = new mongoose.Schema({
     
 }],
 },{
-    timestamps:true
+    timestamp:true
 });
 
 chatHistorySchema.index({userId:1,documentId:1})

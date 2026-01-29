@@ -118,82 +118,66 @@ export const findRelevantChunks = (chunks, query, maxChunks = 3) => {
     return [];
   }
 
-  // Common stop words to exclude
   const stopWords = new Set([
     'the', 'is', 'at', 'which', 'on', 'a', 'an', 'and', 'or', 'but',
     'in', 'with', 'to', 'for', 'of', 'as', 'by', 'this', 'that', 'it'
   ]);
 
-  // Extract and clean query words
   const queryWords = query
     .toLowerCase()
     .split(/\s+/)
     .filter(w => w.length > 2 && !stopWords.has(w));
 
   if (queryWords.length === 0) {
-    // Return clean chunk objects without Mongoose metadata
     return chunks.slice(0, maxChunks).map(chunk => ({
       content: chunk.content,
       chunkIndex: chunk.chunkIndex,
       pageNumber: chunk.pageNumber,
       _id: chunk._id
     }));
-}
+  }
 
   const scoredChunks = chunks.map((chunk, index) => {
     const content = chunk.content.toLowerCase();
-    const contentWords = content.split(/\s+/).length;
+    const contentWords = content.split(/\s+/).length || 1; 
     let score = 0;
 
-    // Score each query word
     for (const word of queryWords) {
-      // Exact word match (higher score)
-      const exactMatches = (content.match(new RegExp(`\\b${word}\\b`, 'g')) || []).length;
+      // Escape special characters to prevent RegExp crashes
+      const safeWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      
+      const exactMatches = (content.match(new RegExp(`\\b${safeWord}\\b`, 'g')) || []).length;
       score += exactMatches * 3;
 
-      // Partial match (lower score)
-      const partialMatches = (content.match(new RegExp(word, 'g')) || []).length;
+      const partialMatches = (content.match(new RegExp(safeWord, 'g')) || []).length;
       score += Math.max(0, partialMatches - exactMatches) * 1.5;
     }
 
-    // Bonus: Multiple query words found
-    const uniqueWordsFound = queryWords.filter(word =>
-      content.includes(word)
-    ).length;
+    const uniqueWordsFound = queryWords.filter(word => content.includes(word)).length;
     if (uniqueWordsFound > 1) {
       score += uniqueWordsFound * 2;
     }
 
-    // Normalize by content length
     const normalizedScore = score / Math.sqrt(contentWords);
-
-    // Small bonus for earlier chunks
     const positionBonus = 1 - (index / chunks.length) * 0.1;
 
-    //return clean object without mongoose metadata
+    return {
+      content: chunk.content,
+      chunkIndex: chunk.chunkIndex ?? index, // FIXED: Correctly accessing index
+      pageNumber: chunk.pageNumber,
+      _id: chunk._id,
+      score: normalizedScore * positionBonus,
+      rawScore: score,
+      matchedWords: uniqueWordsFound
+    };
+  });
 
-     return {
-    content: chunk.content,
-    chunkIndex,
-    pageNumber: chunk.pageNumber,
-    _id: chunk._id,
-    score: normalizedScore*positionBonus,
-    rawScore: score,
-    matchedWords: uniqueWordsFound
-    // chunk_score: score,
-  };
-});
-
-return scoredChunks
-  .filter(chunk => chunk.chunk_score > 0)
-  .sort((a, b) => {
-    if (b.score !== a.score) {
-      return b.score - a.score;
-    }
-    if (b.matchedWords !== a.matchedWords) {
-      return b.matchedWords - a.matchedWords;
-    }
-    return a.chunkIndex - b.chunkIndex;
-  })
-  .slice(0, maxChunks);
-}
+  return scoredChunks
+    .filter(chunk => chunk.rawScore > 0) // FIXED: Matches the property name 'rawScore'
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      if (b.matchedWords !== a.matchedWords) return b.matchedWords - a.matchedWords;
+      return a.chunkIndex - b.chunkIndex;
+    })
+    .slice(0, maxChunks);
+};

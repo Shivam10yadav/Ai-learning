@@ -78,10 +78,38 @@ const ChatInterface = () => {
       setLoading(false);
     }
   };
+const renderMessage = (msg, index) => {
+    const isUser=msg.role==='user'
+  return (
+    <div key={index} className={`flex items-start gap-3 my-4 ${isUser ? 'justify-end' : ''}`}>
+      {!isUser && (
+        <div className="w-9 h-9 rounded-full flex items-center justify-center bg-slate-100">
+          <Sparkles className="" strokeWidth={2} />
+        </div>
+      )}
+      
+      <div className={`max-w-lg p-4 rounded-2xl shadow-sm ${
+        isUser 
+        ? 'bg-linear-to-br from-emerald-500 to-teal-500 text-white rounded-br-md' 
+        : 'bg-white border border-slate-200/60 text-slate-800 rounded-bl-md'
+      }`}>
+        {isUser ? (
+          <p className="">{msg.content}</p>
+        ) : (
+          <div className="">
+            <MarkdownRenderer content={msg.content} />
+          </div>
+        )}
+      </div>
 
-  const renderMessage = (msg, index) => {
-    return "renderMessage";
-  };
+      {isUser && (
+        <div className="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white font-medium">
+          {user?.username?.charAt(0).toUpperCase() || 'U'}
+        </div>
+      )}
+    </div>
+  );
+};
 
   if (initialLoading) {
     return (
