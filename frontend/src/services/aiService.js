@@ -58,3 +58,5 @@ const getChatHistory = async (documentId) => {
 const aiService={
     generateFlashcards,generateQuiz,generateSummary,explainConcept,chat,getChatHistory
 }
+
+export default aiService;
