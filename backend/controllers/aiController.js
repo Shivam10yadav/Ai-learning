@@ -127,7 +127,7 @@ export const chat = async (req, res, next) => {
     const document = await Document.findOne({
       _id: documentId,
       userId: req.user._id,
-      status: 'ready', // Fixed: added quotes
+      status: 'ready',
     });
 
     if (!document) {
@@ -152,29 +152,32 @@ export const chat = async (req, res, next) => {
 
     const answer = await geminiService.chatWithContext(question, relevantChunks);
 
-    // Fixed: Added .push(), fixed 'conetnt' and 'new Date()'
- chatHistory.messages.push(
-  {
-    role: 'user',
-    content: question,      
-    timestamp: new Date(),  // Singular to match schema
-    relevantChunks: []
-  },
-  {
-    role: 'assistant',
-    content: answer,        
-    timestamp: new Date(),  // Singular to match schema
-    relevantChunks: chunkIndices
-  }
-);
+    // Add both user and assistant messages
+    chatHistory.messages.push(
+      {
+        role: 'user',
+        content: question,
+        timestamp: new Date(),
+        relevantChunks: []
+      },
+      {
+        role: 'assistant',
+        content: answer,
+        timestamp: new Date(),
+        relevantChunks: chunkIndices
+      }
+    );
 
-await chatHistory.save();
-
-    await chatHistory.save();
+    await chatHistory.save(); // ← Only once!
 
     res.status(200).json({
       success: true,
-      data: { question, answer, relevantChunks: chunkIndices, chatHistoryId: chatHistory._id },
+      data: { 
+        question, 
+        answer, 
+        relevantChunks: chunkIndices, 
+        chatHistoryId: chatHistory._id 
+      },
       message: "Response generated successfully"
     });
   } catch (error) {

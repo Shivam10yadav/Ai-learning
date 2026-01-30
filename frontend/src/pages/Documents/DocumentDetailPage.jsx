@@ -7,6 +7,7 @@ import { ArrowLeft, ExternalLink } from 'lucide-react'
 import PageHeader from '../../components/common/PageHeader'
 import Tabs from '../../components/common/Tabs'
 import ChatInterface from '../../components/chat/ChatInterface'
+import AIActions from '../../components/ai/AIActions'
 
 const DocumentDetailPage = () => {
   const { id } = useParams()
@@ -86,14 +87,12 @@ const renderChat = () => {
   return <ChatInterface />
 }
 
+const renderAIActions = () => {
+  return <AIActions />
+}
 
-  const renderAIActions = () => {
-    return (
-      <div className='bg-white p-8 rounded-lg border border-gray-300'>
-        <p className='text-gray-600'>AI Actions coming soon...</p>
-      </div>
-    )
-  }
+
+  
 
   const renderFlashcardsTab = () => {
     return (
