@@ -9,6 +9,7 @@ import Tabs from "../../components/common/Tabs";
 import ChatInterface from "../../components/chat/ChatInterface";
 import AIActions from "../../components/ai/AIActions";
 import FlashCardManager from "../../components/flashcards/FlashCardManager";
+import QuizManager from "../../components/quiz/QuizManager";
 
 const DocumentDetailPage = () => {
   const { id } = useParams();
@@ -99,11 +100,8 @@ const DocumentDetailPage = () => {
   };
 
   const renderQuizzesTab = () => {
-    return (
-      <div className="backdrop-blur-xl bg-white/10 p-8 rounded-2xl border border-white/20">
-        <p className="text-slate-300">Quizzes will be displayed here...</p>
-      </div>
-    );
+    return <QuizManager documentId={id}/>
+
   };
 
   const tabs = [
