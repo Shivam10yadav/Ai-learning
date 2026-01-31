@@ -110,6 +110,8 @@ quiz.userAnswers=userAnswers
 quiz.score=score
 quiz.completedAt=new Date()
 
+await quiz.save()
+
 res.status(200).json({
   success:true,
   data:{

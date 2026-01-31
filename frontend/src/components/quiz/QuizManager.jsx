@@ -75,10 +75,17 @@ const QuizManager = ({ documentId }) => {
     try {
       await quizService.deleteQuiz(quizToDelete._id);
       toast.success("Quiz deleted successfully!");
-      setQuizzes(quizzes.filter(q => q._id !== quizToDelete._id));
+      
+      // Update quizzes list using functional update
+      setQuizzes((prevQuizzes) => 
+        prevQuizzes.filter((q) => q._id !== quizToDelete._id)
+      );
+      
+      // Clear selected quiz if it was the one deleted
       if (selectedQuiz?._id === quizToDelete._id) {
         setSelectedQuiz(null);
       }
+      
       setQuizToDelete(null);
     } catch (error) {
       console.error("Error deleting quiz:", error);
@@ -98,9 +105,9 @@ const QuizManager = ({ documentId }) => {
       <div className="flex items-center justify-between">
         <button
           onClick={() => setSelectedQuiz(null)}
-          className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-700 rounded-lg transition"
         >
-          <ArrowLeft size={16} />
+          <ArrowLeft size={18} />
           Back to Quizzes
         </button>
         
@@ -127,7 +134,7 @@ const QuizManager = ({ documentId }) => {
       return (
         <div className="flex flex-col items-center py-16 text-center">
           <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-4">
-            <Brain className="text-emerald-400" size={28} />
+            <Brain className="text-emerald-400" size={28} strokeWidth={2} />
           </div>
           <h3 className="text-xl font-semibold mb-2 text-white">
             No Quizzes Yet
@@ -173,7 +180,7 @@ const QuizManager = ({ documentId }) => {
                 </>
               ) : (
                 <>
-                  <Sparkles size={16} />
+                  <Sparkles size={16} strokeWidth={2} />
                   Generate Quiz
                 </>
               )}
@@ -186,15 +193,20 @@ const QuizManager = ({ documentId }) => {
     return (
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-bold text-white">Your Quizzes</h2>
-            <p className="text-slate-400 text-sm mt-1">
-              {quizzes.length} quiz{quizzes.length !== 1 ? 'zes' : ''} available
-            </p>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white">
+              <Brain size={20} strokeWidth={2.5} />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-white">Your Quizzes</h2>
+              <p className="text-slate-400 text-sm mt-1">
+                {quizzes.length} quiz{quizzes.length !== 1 ? 'zes' : ''} available
+              </p>
+            </div>
           </div>
           
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setShowSettings(!showSettings)}
               className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl transition ${
@@ -249,11 +261,11 @@ const QuizManager = ({ documentId }) => {
             <div
               key={quiz._id}
               onClick={() => setSelectedQuiz(quiz)}
-              className="relative bg-slate-800 border border-slate-700 rounded-xl p-5 cursor-pointer hover:shadow-lg hover:shadow-emerald-500/10 hover:border-emerald-500/30 transition-all group"
+              className="group relative bg-slate-800 border border-slate-700 rounded-xl p-5 cursor-pointer hover:shadow-lg hover:shadow-emerald-500/10 hover:border-emerald-500/30 transition-all"
             >
               <button
                 onClick={(e) => handleDeleteRequest(e, quiz)}
-                className="absolute top-3 right-3 text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition"
+                className="absolute top-3 right-3 p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition"
                 title="Delete quiz"
               >
                 <Trash2 size={16} />
@@ -279,6 +291,11 @@ const QuizManager = ({ documentId }) => {
                   {moment(quiz.createdAt).fromNow()}
                 </p>
               </div>
+
+              {/* View indicator */}
+              <div className="mt-4 flex items-center justify-end text-emerald-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition">
+                Take Quiz →
+              </div>
             </div>
           ))}
         </div>
@@ -287,31 +304,31 @@ const QuizManager = ({ documentId }) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white rounded-2xl p-8">
+    <div className="bg-slate-900 border border-slate-700 rounded-2xl shadow-sm p-8">
       {selectedQuiz ? renderQuizViewer() : renderQuizList()}
 
       {/* Delete Confirmation Modal */}
       {quizToDelete && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-slate-800 p-6 rounded-2xl w-full max-w-md border border-slate-700 shadow-xl">
-            <h3 className="text-lg font-bold mb-2 text-white">
+          <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 max-w-md w-full shadow-xl">
+            <h3 className="text-xl font-bold text-white mb-2">
               Delete Quiz?
             </h3>
             <p className="text-slate-400 mb-6">
-              This quiz will be permanently deleted. This action cannot be undone.
+              Are you sure you want to delete this quiz? This action cannot be undone.
             </p>
-            <div className="flex gap-3">
+            <div className="flex items-center gap-3">
               <button
                 onClick={() => setQuizToDelete(null)}
                 disabled={deleting}
-                className="flex-1 bg-slate-700 hover:bg-slate-600 text-white rounded-xl py-2.5 font-medium transition disabled:opacity-50"
+                className="flex-1 px-4 py-2.5 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-xl transition disabled:opacity-50"
               >
                 Cancel
               </button>
               <button
                 onClick={handleConfirmDelete}
                 disabled={deleting}
-                className="flex-1 bg-red-600 hover:bg-red-500 text-white rounded-xl py-2.5 font-medium transition disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-2.5 bg-red-600 hover:bg-red-500 text-white font-medium rounded-xl transition disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {deleting ? (
                   <>
@@ -319,7 +336,10 @@ const QuizManager = ({ documentId }) => {
                     Deleting...
                   </>
                 ) : (
-                  "Delete"
+                  <>
+                    <Trash2 size={18} />
+                    Delete
+                  </>
                 )}
               </button>
             </div>

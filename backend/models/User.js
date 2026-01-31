@@ -27,26 +27,22 @@ const userSchema=new mongoose.Schema({
         default:null
     }
 },{
-    timestamps:true //for created at upadtes at exact time
+    timestamps:true
 })
 
 //hashpassword before saving
-
-userSchema.pre('save',async function (next) {
+userSchema.pre('save', async function () {
     if(!this.isModified('password')){
-         return next()
+         return
     }
 
-    const salt= await bcrypt.genSalt(10)
-    this.password= await bcrypt.hash(this.password,salt)
-    
+    const salt = await bcrypt.genSalt(10)
+    this.password = await bcrypt.hash(this.password, salt)
 })
+
 //compare password
-
 userSchema.methods.matchPassword = async function(enteredPassword) {
-
   const result = await bcrypt.compare(enteredPassword, this.password);
- 
   return result;
 }
 

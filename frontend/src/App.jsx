@@ -12,6 +12,7 @@ import QuizResultPage from './pages/Quizzes/QuizResultPage'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import ProfilePage from './pages/Profile/ProfilePage'
 import { useAuth } from './context/AuthContext'
+import FlashcardListPage from './pages/Flashcards/FlashcardListPage'
 
 const App = () => {
 const{isAuthenticated,loading}=useAuth()
@@ -36,6 +37,7 @@ const{isAuthenticated,loading}=useAuth()
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/documents" element={<DocumentListPage />} />
           <Route path="/documents/:id" element={<DocumentDetailPage />} />
+          <Route path="/flashcards" element={<FlashcardListPage />} />
           <Route path="/documents/:id/flashcards" element={<FlashcardPage />} />
           <Route path="/quizzes/:quizId/attempt" element={<QuizTakePage/>} />
           <Route path="/quizzes/:quizId/results" element={<QuizResultPage />} />

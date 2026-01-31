@@ -20,10 +20,10 @@ const Flashcard = ({ front, back, isFlipped, onFlip, starred, onToggleStar, card
           className="absolute inset-0 w-full h-full backface-hidden"
           style={{ backfaceVisibility: 'hidden' }}
         >
-          <div className="w-full h-full bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-2xl shadow-xl p-8 flex flex-col">
+          <div className="w-full h-full bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border-2 border-emerald-500/50 rounded-2xl shadow-xl p-8 flex flex-col backdrop-blur-sm">
             {/* Front Label */}
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wide">
+              <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wide">
                 Question
               </span>
               {onToggleStar && (
@@ -32,10 +32,10 @@ const Flashcard = ({ front, back, isFlipped, onFlip, starred, onToggleStar, card
                     e.stopPropagation()
                     onToggleStar(cardId)
                   }}
-                  className={`p-2 rounded-lg transition-colors ${
+                  className={`p-2 rounded-lg transition ${
                     starred
-                      ? 'text-yellow-500 bg-yellow-50'
-                      : 'text-slate-400 hover:text-yellow-500 hover:bg-yellow-50'
+                      ? 'text-yellow-400 bg-yellow-500/10'
+                      : 'text-slate-400 hover:text-yellow-400 hover:bg-yellow-500/10'
                   }`}
                 >
                   <Star size={20} fill={starred ? 'currentColor' : 'none'} />
@@ -45,13 +45,13 @@ const Flashcard = ({ front, back, isFlipped, onFlip, starred, onToggleStar, card
 
             {/* Front Content */}
             <div className="flex-1 flex items-center justify-center">
-              <p className="text-xl font-semibold text-slate-900 text-center">
+              <p className="text-xl font-semibold text-white text-center">
                 {front}
               </p>
             </div>
 
             {/* Hint */}
-            <div className="text-center text-sm text-slate-500 mt-4">
+            <div className="text-center text-sm text-slate-400 mt-4">
               Click to reveal answer
             </div>
           </div>
@@ -65,10 +65,10 @@ const Flashcard = ({ front, back, isFlipped, onFlip, starred, onToggleStar, card
             transform: 'rotateY(180deg)',
           }}
         >
-          <div className="w-full h-full bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-2xl shadow-xl p-8 flex flex-col">
+          <div className="w-full h-full bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border-2 border-blue-500/50 rounded-2xl shadow-xl p-8 flex flex-col backdrop-blur-sm">
             {/* Back Label */}
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-semibold text-blue-600 uppercase tracking-wide">
+              <span className="text-xs font-semibold text-blue-400 uppercase tracking-wide">
                 Answer
               </span>
               {onToggleStar && (
@@ -77,10 +77,10 @@ const Flashcard = ({ front, back, isFlipped, onFlip, starred, onToggleStar, card
                     e.stopPropagation()
                     onToggleStar(cardId)
                   }}
-                  className={`p-2 rounded-lg transition-colors ${
+                  className={`p-2 rounded-lg transition ${
                     starred
-                      ? 'text-yellow-500 bg-yellow-50'
-                      : 'text-slate-400 hover:text-yellow-500 hover:bg-yellow-50'
+                      ? 'text-yellow-400 bg-yellow-500/10'
+                      : 'text-slate-400 hover:text-yellow-400 hover:bg-yellow-500/10'
                   }`}
                 >
                   <Star size={20} fill={starred ? 'currentColor' : 'none'} />
@@ -90,13 +90,13 @@ const Flashcard = ({ front, back, isFlipped, onFlip, starred, onToggleStar, card
 
             {/* Back Content */}
             <div className="flex-1 flex items-center justify-center overflow-y-auto">
-              <p className="text-lg text-slate-900 text-center">
+              <p className="text-lg text-white text-center">
                 {back}
               </p>
             </div>
 
             {/* Hint */}
-            <div className="text-center text-sm text-slate-500 mt-4">
+            <div className="text-center text-sm text-slate-400 mt-4">
               Click to see question
             </div>
           </div>

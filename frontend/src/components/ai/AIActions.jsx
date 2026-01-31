@@ -52,18 +52,18 @@ const AIActions = () => {
     <div className="w-full p-6 space-y-6">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <div className="p-3 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-lg shadow-emerald-500/30">
+        <div className="p-3 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/20">
           <Sparkles size={24} strokeWidth={2} />
         </div>
         <div>
           <h2 className="text-2xl font-bold text-white">AI Assistant</h2>
-          <p className="text-sm text-slate-100">Powered by advanced AI</p>
+          <p className="text-sm text-slate-400">Powered by advanced AI</p>
         </div>
       </div>
 
       {/* AI Disclaimer */}
-      <div className="p-4 border-l-4 border-yellow-400 rounded-lg bg-yellow-50">
-        <p className="text-sm text-yellow-800">
+      <div className="p-4 border-l-4 border-yellow-500 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
+        <p className="text-sm text-yellow-300">
           <span className="font-semibold">⚠️ AI can make mistakes.</span> Please verify important information.
         </p>
       </div>
@@ -72,26 +72,26 @@ const AIActions = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Generate Summary Card */}
-        <div className="flex flex-col bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+        <div className="flex flex-col bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-sm hover:shadow-lg hover:shadow-emerald-500/10 hover:border-emerald-500/30 transition-all">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2.5 rounded-lg bg-blue-100 text-blue-600">
+            <div className="p-2.5 rounded-lg bg-blue-500/10 text-blue-400">
               <BookOpen size={20} strokeWidth={2.5} />
             </div>
-            <h3 className="text-lg font-semibold text-slate-900">Generate Summary</h3>
+            <h3 className="text-lg font-semibold text-white">Generate Summary</h3>
           </div>
 
-          <p className="text-slate-600 text-medium mb-6 flex-grow pt-6">
+          <p className="text-slate-400 text-sm mb-6 flex-grow">
             Get a clean and concise summary of the entire document in seconds.
           </p>
 
           <button
             onClick={handleGenerateSummary}
             disabled={loadingAction === 'summary'}
-            className="w-full py-3 text-sm font-medium text-white rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:shadow-lg hover:shadow-emerald-500/30 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full py-3 text-sm font-medium text-white rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:shadow-lg hover:shadow-emerald-500/20 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2"
           >
             {loadingAction === 'summary' ? (
               <>
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 Summarizing…
               </>
             ) : (
@@ -106,21 +106,21 @@ const AIActions = () => {
         {/* Explain Concept Card */}
         <form
           onSubmit={handleExplainConcept}
-          className="flex flex-col bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow"
+          className="flex flex-col bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-sm hover:shadow-lg hover:shadow-emerald-500/10 hover:border-emerald-500/30 transition-all"
         >
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2.5 rounded-lg bg-yellow-100 text-yellow-600">
+            <div className="p-2.5 rounded-lg bg-yellow-500/10 text-yellow-400">
               <Lightbulb size={20} strokeWidth={2.5} />
             </div>
-            <h3 className="text-lg font-semibold text-slate-900">Explain a Concept</h3>
+            <h3 className="text-lg font-semibold text-white">Explain a Concept</h3>
           </div>
 
-          <p className="text-slate-600 text-sm mb-4">
+          <p className="text-slate-400 text-sm mb-4">
             Enter any topic from the document and get a detailed AI explanation.
           </p>
 
           <div className="mb-6 flex-grow">
-            <label htmlFor="concept-input" className="block text-sm font-medium text-slate-700 mb-2">
+            <label htmlFor="concept-input" className="block text-sm font-medium text-slate-300 mb-2">
               Concept or Topic
             </label>
             <input
@@ -129,18 +129,18 @@ const AIActions = () => {
               value={concept}
               onChange={(e) => setConcept(e.target.value)}
               placeholder="e.g. React JSX, Machine Learning, etc."
-              className="w-full px-4 py-3 text-slate-900 bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent placeholder-slate-400 transition-all"
+              className="w-full px-4 py-3 text-white bg-slate-700 border border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent placeholder-slate-400 transition-all"
             />
           </div>
 
           <button
             type="submit"
             disabled={loadingAction === 'explain' || !concept.trim()}
-            className="w-full py-3 text-sm font-medium text-white rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:shadow-lg hover:shadow-emerald-500/30 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full py-3 text-sm font-medium text-white rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:shadow-lg hover:shadow-emerald-500/20 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2"
           >
             {loadingAction === 'explain' ? (
               <>
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 Explaining…
               </>
             ) : (
@@ -155,12 +155,12 @@ const AIActions = () => {
 
       {/* Output Section */}
       {content && (
-        <div className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
-          <div className="flex items-center gap-2 mb-4 pb-4 border-b border-slate-200">
-            <Sparkles className="text-emerald-500" size={20} />
-            <h3 className="text-xl font-semibold text-slate-900">{title}</h3>
+        <div className="p-6 bg-slate-800 border border-slate-700 rounded-2xl shadow-sm">
+          <div className="flex items-center gap-2 mb-4 pb-4 border-b border-slate-700">
+            <Sparkles className="text-emerald-400" size={20} />
+            <h3 className="text-xl font-semibold text-white">{title}</h3>
           </div>
-          <div className="prose prose-slate max-w-none">
+          <div className="prose prose-invert prose-slate max-w-none">
             <MarkdownRenderer content={content} />
           </div>
         </div>

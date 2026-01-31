@@ -159,33 +159,64 @@ export const getProfile=async(req,res,next)=>{
 //routes put /api/auth/profile
 //access private
 
-export const updateProfile=async(req,res,next)=>{
-  try {
-        const{username,email,profileImage}=req.body
-        const user=await User.findById(req.user._id)
+// controllers/authController.js
 
-        if(username) user.username=username;
-        if(email) user.email=email;
-        if(profileImage) user.profileImage=profileImage;
+export const updateProfile = async (req, res, next) => {
+    try {
+        const { username, email, profileImage } = req.body;
+        
+        // 1. Find user by ID from the auth middleware (req.user._id)
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({ success: false, error: "User not found" });
+        }
 
-        await user.save()
+        // 2. Check if username is taken by SOMEONE ELSE
+        if (username && username !== user.username) {
+            const usernameExists = await User.findOne({ 
+                username: username.trim(), 
+                _id: { $ne: req.user._id } 
+            });
+            if (usernameExists) {
+                return res.status(400).json({ success: false, error: "Username already taken" });
+            }
+            user.username = username.trim();
+        }
+
+        // 3. Check if email is taken by SOMEONE ELSE
+        if (email && email !== user.email) {
+            const emailExists = await User.findOne({ 
+                email: email.trim(), 
+                _id: { $ne: req.user._id } 
+            });
+            if (emailExists) {
+                return res.status(400).json({ success: false, error: "Email already in use" });
+            }
+            user.email = email.trim();
+        }
+
+        if (profileImage) user.profileImage = profileImage;
+
+        // 4. Save the user. 
+        // NOTE: Your User.js model has: if(!this.isModified('password')) return;
+        // This is crucial so your existing hashed password isn't re-hashed.
+        await user.save();
 
         res.status(200).json({
-            success:true,
-            data:{
-                id:user._id,
-                username:user.username,
-                email:user.email,
-                profileImage:user.profileImage,
+            success: true,
+            data: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                profileImage: user.profileImage,
             },
-            message:"Profile Upadted Successfully"
-        })
+            message: "Profile Updated Successfully"
+        });
 
     } catch (error) {
-                next(error)
-
+        next(error);
     }
-}
+};
 
 //desc change password
 //routes get /api/auth/change-password
@@ -203,7 +234,7 @@ export const changePassword=async(req,res,next)=>{
             })
         }
 
-        const user=await User.findById(req.user._id).select(+"password")
+        const user=await User.findById(req.user._id).select("+password")
 
         //check current password
         const isMatch=await user.matchPassword(currentPassword)
