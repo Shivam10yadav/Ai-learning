@@ -78,38 +78,39 @@ const ChatInterface = () => {
       setLoading(false);
     }
   };
-const renderMessage = (msg, index) => {
-    const isUser=msg.role==='user'
-  return (
-    <div key={index} className={`flex items-start gap-3 my-4 ${isUser ? 'justify-end' : ''}`}>
-      {!isUser && (
-        <div className="w-9 h-9 rounded-full flex items-center justify-center bg-slate-100">
-          <Sparkles className="" strokeWidth={2} />
+
+  const renderMessage = (msg, index) => {
+    const isUser = msg.role === 'user'
+    return (
+      <div key={index} className={`flex items-start gap-3 my-4 ${isUser ? 'justify-end' : ''}`}>
+        {!isUser && (
+          <div className="w-9 h-9 rounded-full flex items-center justify-center bg-slate-100">
+            <Sparkles className="text-black" strokeWidth={2} />
+          </div>
+        )}
+        
+        <div className={`max-w-lg p-4 rounded-2xl shadow-sm ${
+          isUser 
+          ? 'bg-linear-to-br from-emerald-500 to-teal-500 text-white rounded-br-md' 
+          : 'bg-white border border-slate-200/60 text-slate-800 rounded-bl-md'
+        }`}>
+          {isUser ? (
+            <p className="">{msg.content}</p>
+          ) : (
+            <div className="">
+              <MarkdownRenderer content={msg.content} />
+            </div>
+          )}
         </div>
-      )}
-      
-      <div className={`max-w-lg p-4 rounded-2xl shadow-sm ${
-        isUser 
-        ? 'bg-linear-to-br from-emerald-500 to-teal-500 text-white rounded-br-md' 
-        : 'bg-white border border-slate-200/60 text-slate-800 rounded-bl-md'
-      }`}>
-        {isUser ? (
-          <p className="">{msg.content}</p>
-        ) : (
-          <div className="">
-            <MarkdownRenderer content={msg.content} />
+
+        {isUser && (
+          <div className="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white font-medium">
+            {user?.username?.charAt(0).toUpperCase() || 'U'}
           </div>
         )}
       </div>
-
-      {isUser && (
-        <div className="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white font-medium">
-          {user?.username?.charAt(0).toUpperCase() || 'U'}
-        </div>
-      )}
-    </div>
-  );
-};
+    );
+  };
 
   if (initialLoading) {
     return (
@@ -125,73 +126,78 @@ const renderMessage = (msg, index) => {
     );
   }
 
- 
-return (
-  <div className="flex flex-col h-[70vh] bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-2xl shadow-xl shadow-slate-200/50 overflow-hidden">
-    
-    {/* messages */}
-    <div className="flex-1 p-6 overflow-y-auto bg-linear-to-br from-slate-50/50 via-white/50 to-slate-50/50">
-      {history.length === 0 ? (
-        <div className="flex flex-col items-center justify-center h-full text-center">
-          <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-emerald-100 to-teal-100 flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/10">
-            <MessageSquare className="w-8 h-8 text-emerald-600" strokeWidth={2} />
+  return (
+    <div className="flex flex-col h-[70vh] bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-2xl shadow-xl shadow-slate-200/50 overflow-hidden">
+      
+      {/* messages */}
+      <div className="flex-1 p-6 overflow-y-auto bg-linear-to-br from-slate-50/50 via-white/50 to-slate-50/50">
+        {history.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full text-center">
+            <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-emerald-100 to-teal-100 flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/10">
+              <MessageSquare className="w-8 h-8 text-emerald-600" strokeWidth={2} />
+            </div>
+            <h3 className="text-base font-semibold text-slate-900 mb-2">
+              Start a conversation
+            </h3>
+            <p className="text-bold text-black">
+              Ask me anything about the document
+            </p>
           </div>
-          <h3 className="text-base font-semibold text-slate-900 mb-2">
-            Start a conversation
-          </h3>
-          <p className="text-bold text-black">
-            Ask me anything about the document
-          </p>
-        </div>
-      ) : (
-        history.map(renderMessage)
-      )}
+        ) : (
+          history.map(renderMessage)
+        )}
 
-      <div ref={messagesEndRef} />
+        <div ref={messagesEndRef} />
 
-      {loading && (
-        <div className="flex items-center gap-3 mt-4">
-          <div className="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center">
-            <Sparkles className="w-4 h-4 text-emerald-600 animate-pulse" />
+        {loading && (
+          <div className="flex items-center gap-3 mt-4">
+            <div className="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center">
+              <Sparkles className="w-4 h-4 text-emerald-600 animate-pulse" />
+            </div>
+            <div className="flex gap-1">
+              <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" />
+              <span
+                className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
+                style={{ animationDelay: "150ms" }}
+              />
+              <span
+                className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
+                style={{ animationDelay: "300ms" }}
+              />
+            </div>
           </div>
-          <div className="flex gap-1">
-            <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" />
-            <span
-              className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
-              style={{ animationDelay: "150ms" }}
-            />
-            <span
-              className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
-              style={{ animationDelay: "300ms" }}
-            />
-          </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
 
-    {/* input */}
-    <form
-      onSubmit={handleSendMessage}
-      className="border-t border-slate-200/60 bg-white/70 backdrop-blur-xl p-4 flex gap-3"
-    >
-      <input
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        placeholder="Ask something…"
-        className="flex-1 rounded-xl border border-slate-200 px-4 py-2 text-bold text-black outline-none focus:ring-2 focus:ring-emerald-500/20"
-      />
-
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-11 h-11 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center disabled:opacity-50"
+      {/* input */}
+      <form
+        onSubmit={handleSendMessage}
+        className="border-t border-slate-200/60 bg-white/70 backdrop-blur-xl p-4 flex flex-col gap-3"
       >
-        <Send className="w-5 h-5" />
-      </button>
-    </form>
-  </div>
-);
+        <div className="flex gap-3">
+          <input
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Ask something…"
+            className="flex-1 rounded-xl border border-slate-200 px-4 py-2 text-bold text-black outline-none focus:ring-2 focus:ring-emerald-500/20"
+          />
 
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-11 h-11 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center disabled:opacity-50"
+          >
+            <Send className="w-5 h-5" />
+          </button>
+        </div>
+        
+        {/* AI Disclaimer */}
+        <p className="text-xs text-slate-500 text-center">
+          <span className="font-bold">AI can make mistakes.</span> Please verify important information.
+        </p>
+      </form>
+    </div>
+  );
 };
 
 export default ChatInterface;

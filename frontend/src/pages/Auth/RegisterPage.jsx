@@ -40,16 +40,24 @@ const RegisterPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-black-500 to-red-900 px-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-6">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-black-500 to-red-900 px-4 relative overflow-hidden">
+      
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 left-20 w-72 h-72 bg-emerald-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-red-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
+      {/* Glassmorphism card */}
+      <div className="w-full max-w-md backdrop-blur-xl bg-white/10 rounded-2xl shadow-2xl border border-white/20 p-8 space-y-6 relative z-10">
 
         {/* Header */}
         <div className="text-center space-y-2">
-          <div className="mx-auto w-12 h-12 flex items-center justify-center rounded-xl bg-emerald-100">
-            <BrainCircuit className="text-emerald-600" strokeWidth={2} />
+          <div className="mx-auto w-12 h-12 flex items-center justify-center rounded-xl bg-emerald-500/20 backdrop-blur-sm border border-emerald-400/30">
+            <BrainCircuit className="text-emerald-300" strokeWidth={2} />
           </div>
-          <h1 className="text-2xl font-bold text-slate-800">Create an account</h1>
-          <p className="text-slate-500 text-sm">
+          <h1 className="text-2xl font-bold text-white">Create an account</h1>
+          <p className="text-slate-300 text-sm">
             Start your AI-powered learning journey
           </p>
         </div>
@@ -59,11 +67,11 @@ const RegisterPage = () => {
 
           {/* Username */}
           <div className="space-y-1">
-            <label className="text-sm font-medium text-slate-700">Username</label>
+            <label className="text-sm font-medium text-slate-200">Username</label>
             <div className="relative">
               <div
                 className={`absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none ${
-                  focusedField === 'username' ? 'text-emerald-500' : 'text-slate-400'
+                  focusedField === 'username' ? 'text-emerald-400' : 'text-slate-400'
                 }`}
               >
                 <User size={18} />
@@ -75,18 +83,18 @@ const RegisterPage = () => {
                 onFocus={() => setFocusedField('username')}
                 onBlur={() => setFocusedField(null)}
                 placeholder="your name"
-                className="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition"
+                className="w-full pl-11 pr-4 py-2.5 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-slate-400 focus:border-emerald-400/50 focus:ring-2 focus:ring-emerald-400/20 outline-none transition"
               />
             </div>
           </div>
 
           {/* Email */}
           <div className="space-y-1">
-            <label className="text-sm font-medium text-slate-700">Email</label>
+            <label className="text-sm font-medium text-slate-200">Email</label>
             <div className="relative">
               <div
                 className={`absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none ${
-                  focusedField === 'email' ? 'text-emerald-500' : 'text-slate-400'
+                  focusedField === 'email' ? 'text-emerald-400' : 'text-slate-400'
                 }`}
               >
                 <Mail size={18} />
@@ -98,49 +106,48 @@ const RegisterPage = () => {
                 onFocus={() => setFocusedField('email')}
                 onBlur={() => setFocusedField(null)}
                 placeholder="you@example.com"
-                className="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition"
+                className="w-full pl-11 pr-4 py-2.5 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-slate-400 focus:border-emerald-400/50 focus:ring-2 focus:ring-emerald-400/20 outline-none transition"
               />
             </div>
           </div>
 
           {/* Password */}
-<div className="space-y-1">
-  <label className="text-sm font-medium text-slate-700">Password</label>
+          <div className="space-y-1">
+            <label className="text-sm font-medium text-slate-200">Password</label>
 
-  <div className="relative">
-    <div
-      className={`absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none ${
-        focusedField === 'password' ? 'text-emerald-500' : 'text-slate-400'
-      }`}
-    >
-      <Lock size={18} />
-    </div>
+            <div className="relative">
+              <div
+                className={`absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none ${
+                  focusedField === 'password' ? 'text-emerald-400' : 'text-slate-400'
+                }`}
+              >
+                <Lock size={18} />
+              </div>
 
-    <input
-      type={showPassword ? 'text' : 'password'}
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-      onFocus={() => setFocusedField('password')}
-      onBlur={() => setFocusedField(null)}
-      placeholder="••••••••"
-      className="w-full pl-11 pr-11 py-2.5 rounded-xl border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition"
-    />
+              <input
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onFocus={() => setFocusedField('password')}
+                onBlur={() => setFocusedField(null)}
+                placeholder="••••••••"
+                className="w-full pl-11 pr-11 py-2.5 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-slate-400 focus:border-emerald-400/50 focus:ring-2 focus:ring-emerald-400/20 outline-none transition"
+              />
 
-    {/* Show / Hide button */}
-    <button
-      type="button"
-      onClick={() => setShowPassword(!showPassword)}
-      className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-emerald-600 transition"
-    >
-      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-    </button>
-  </div>
-</div>
-
+              {/* Show / Hide button */}
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-emerald-400 transition"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+          </div>
 
           {/* Error */}
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg px-4 py-2">
+            <div className="bg-red-500/20 backdrop-blur-sm border border-red-400/30 text-red-200 text-sm rounded-lg px-4 py-2">
               {error}
             </div>
           )}
@@ -149,7 +156,7 @@ const RegisterPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-emerald-600 text-white font-medium hover:bg-emerald-700 disabled:opacity-60 transition"
+            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-emerald-500/80 backdrop-blur-sm text-white font-medium hover:bg-emerald-500 border border-emerald-400/30 disabled:opacity-60 transition shadow-lg shadow-emerald-500/20"
           >
             {loading ? (
               <>
@@ -166,9 +173,9 @@ const RegisterPage = () => {
         </form>
 
         {/* Footer */}
-        <div className="text-center text-sm text-slate-600">
+        <div className="text-center text-sm text-slate-300">
           Already have an account?{' '}
-          <Link to="/login" className="text-emerald-600 font-medium hover:underline">
+          <Link to="/login" className="text-emerald-300 font-medium hover:text-emerald-200 transition">
             Sign in
           </Link>
         </div>

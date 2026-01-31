@@ -19,6 +19,7 @@ const AIActions = () => {
       const { summary } = await aiService.generateSummary(documentId)
       setTitle('Generated Summary')
       setContent(summary)
+      toast.success('Summary generated successfully!')
     } catch (error) {
       toast.error('Failed to generate summary.')
     } finally {
@@ -39,6 +40,7 @@ const AIActions = () => {
       setTitle(`Explanation of "${concept}"`)
       setContent(explanation)
       setConcept('')
+      toast.success('Concept explained successfully!')
     } catch (error) {
       toast.error('Failed to explain concept.')
     } finally {
@@ -46,92 +48,125 @@ const AIActions = () => {
     }
   }
 
- return (
-  <div className="w-full h-full p-6">
-    {/* Header */}
-    <div className="flex items-center gap-3 mb-6">
-      <div className="p-3 rounded-xl bg-emerald-100 text-emerald-600">
-        <Sparkles size={24} />
-      </div>
-      <div>
-        <h2 className="text-2xl font-bold">AI Assistant</h2>
-        <p className="text-sm text-gray-500">Powered by advanced AI</p>
-      </div>
-    </div>
-
-    {/* Big Cards */}
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
-      
-      {/* Generate Summary Card */}
-      <div className="flex flex-col justify-between p-6 border rounded-2xl bg-white shadow-sm min-h-[260px]">
+  return (
+    <div className="w-full p-6 space-y-6">
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <div className="p-3 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-lg shadow-emerald-500/30">
+          <Sparkles size={24} strokeWidth={2} />
+        </div>
         <div>
+          <h2 className="text-2xl font-bold text-white">AI Assistant</h2>
+          <p className="text-sm text-slate-100">Powered by advanced AI</p>
+        </div>
+      </div>
+
+      {/* AI Disclaimer */}
+      <div className="p-4 border-l-4 border-yellow-400 rounded-lg bg-yellow-50">
+        <p className="text-sm text-yellow-800">
+          <span className="font-semibold">⚠️ AI can make mistakes.</span> Please verify important information.
+        </p>
+      </div>
+
+      {/* Action Cards Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        {/* Generate Summary Card */}
+        <div className="flex flex-col bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-3 rounded-xl bg-blue-100 text-blue-600">
-              <BookOpen size={22} />
+            <div className="p-2.5 rounded-lg bg-blue-100 text-blue-600">
+              <BookOpen size={20} strokeWidth={2.5} />
             </div>
-            <h3 className="text-xl font-semibold">Generate Summary</h3>
+            <h3 className="text-lg font-semibold text-slate-900">Generate Summary</h3>
           </div>
 
-          <p className="text-gray-500">
+          <p className="text-slate-600 text-medium mb-6 flex-grow pt-6">
             Get a clean and concise summary of the entire document in seconds.
           </p>
+
+          <button
+            onClick={handleGenerateSummary}
+            disabled={loadingAction === 'summary'}
+            className="w-full py-3 text-sm font-medium text-white rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:shadow-lg hover:shadow-emerald-500/30 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
+          >
+            {loadingAction === 'summary' ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Summarizing…
+              </>
+            ) : (
+              <>
+                <BookOpen size={18} />
+                Summarize Document
+              </>
+            )}
+          </button>
         </div>
 
-        <button
-          onClick={handleGenerateSummary}
-          disabled={loadingAction === 'summary'}
-          className="w-full py-3 mt-6 text-base font-medium text-white rounded-xl bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60"
+        {/* Explain Concept Card */}
+        <form
+          onSubmit={handleExplainConcept}
+          className="flex flex-col bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow"
         >
-          {loadingAction === 'summary' ? 'Summarizing…' : 'Summarize Document'}
-        </button>
-      </div>
-
-      {/* Explain Concept Card */}
-      <form
-        onSubmit={handleExplainConcept}
-        className="flex flex-col justify-between p-6 border rounded-2xl bg-white shadow-sm min-h-[260px]"
-      >
-        <div>
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-3 rounded-xl bg-yellow-100 text-yellow-600">
-              <Lightbulb size={22} />
+            <div className="p-2.5 rounded-lg bg-yellow-100 text-yellow-600">
+              <Lightbulb size={20} strokeWidth={2.5} />
             </div>
-            <h3 className="text-xl font-semibold">Explain a Concept</h3>
+            <h3 className="text-lg font-semibold text-slate-900">Explain a Concept</h3>
           </div>
 
-          <p className="mb-4 text-gray-500">
+          <p className="text-slate-600 text-sm mb-4">
             Enter any topic from the document and get a detailed AI explanation.
           </p>
 
-          <input
-            type="text"
-            value={concept}
-            onChange={(e) => setConcept(e.target.value)}
-            placeholder="e.g. React JSX"
-            className="w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500"
-          />
-        </div>
+          <div className="mb-6 flex-grow">
+            <label htmlFor="concept-input" className="block text-sm font-medium text-slate-700 mb-2">
+              Concept or Topic
+            </label>
+            <input
+              id="concept-input"
+              type="text"
+              value={concept}
+              onChange={(e) => setConcept(e.target.value)}
+              placeholder="e.g. React JSX, Machine Learning, etc."
+              className="w-full px-4 py-3 text-slate-900 bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent placeholder-slate-400 transition-all"
+            />
+          </div>
 
-        <button
-          type="submit"
-          disabled={loadingAction === 'explain'}
-          className="w-full py-3 mt-6 text-base font-medium text-white rounded-xl bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60"
-        >
-          {loadingAction === 'explain' ? 'Explaining…' : 'Explain Concept'}
-        </button>
-      </form>
-    </div>
-
-    {/* Output */}
-    {content && (
-      <div className="mt-8 p-6 border rounded-2xl bg-white shadow-sm">
-        <h3 className="mb-4 text-xl font-semibold">{title}</h3>
-        <MarkdownRenderer content={content} />
+          <button
+            type="submit"
+            disabled={loadingAction === 'explain' || !concept.trim()}
+            className="w-full py-3 text-sm font-medium text-white rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:shadow-lg hover:shadow-emerald-500/30 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
+          >
+            {loadingAction === 'explain' ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Explaining…
+              </>
+            ) : (
+              <>
+                <Lightbulb size={18} />
+                Explain Concept
+              </>
+            )}
+          </button>
+        </form>
       </div>
-    )}
-  </div>
-)
 
+      {/* Output Section */}
+      {content && (
+        <div className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
+          <div className="flex items-center gap-2 mb-4 pb-4 border-b border-slate-200">
+            <Sparkles className="text-emerald-500" size={20} />
+            <h3 className="text-xl font-semibold text-slate-900">{title}</h3>
+          </div>
+          <div className="prose prose-slate max-w-none">
+            <MarkdownRenderer content={content} />
+          </div>
+        </div>
+      )}
+    </div>
+  )
 }
 
 export default AIActions
