@@ -3,7 +3,6 @@ import cors from "cors"
 import path from "path"
 import dotenv from "dotenv"
 import { fileURLToPath } from "url"
-// import { error } from "console"
 import connectDB from './config/db.js'
 import errorHandler from "./middleware/errorHandler.js"
 import authRoutes from './routes/authRoutes.js'
