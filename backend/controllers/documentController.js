@@ -58,8 +58,8 @@
             }
 
             // Construct the url for the uploaded file
-            const baseUrl = `http://localhost:${process.env.PORT || 8000}`;  
-               const fileUrl = `/uploads/documents/${req.file.filename}`;
+          const baseUrl = `http://localhost:${process.env.PORT || 8000}`;  
+              const fileUrl = `${baseUrl}/uploads/documents/${req.file.filename}`;
             // Create document record
             const document = await Document.create({
                 userId: req.user._id,
