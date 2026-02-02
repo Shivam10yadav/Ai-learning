@@ -34,16 +34,25 @@ const DocumentDetailPage = () => {
     fetchDocumentDetails();
   }, [id]);
 
-  const getPdfUrl = () => {
-    if (!document?.data?.filePath) return null;
+ const getPdfUrl = () => {
+  if (!document?.data?.filePath) return null;
 
-    const filePath = document.data.filePath;
-    if (filePath.startsWith("http")) return filePath;
+  const filePath = document.data.filePath;
+  
+  // If it's already a full URL, return as is
+  if (filePath.startsWith("http")) return filePath;
 
-    const baseUrl = import.meta.env.VITE_API_URL || "https://flashmind-backend-3lji.onrender.com";
-
-    return `${baseUrl}${filePath.startsWith("/") ? "" : "/"}${filePath}`;
-  };
+  // Get base URL from environment variable
+  const baseUrl = import.meta.env.VITE_API_URL || "https://flashmind-backend-3lji.onrender.com";
+  
+  // Remove trailing slash from baseUrl if present
+  const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  
+  // Ensure filePath starts with /
+  const cleanFilePath = filePath.startsWith('/') ? filePath : `/${filePath}`;
+  
+  return `${cleanBaseUrl}${cleanFilePath}`;
+};
 
   const renderContent = () => {
     if (!document || !document.data || !document.data.filePath) {

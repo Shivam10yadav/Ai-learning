@@ -36,59 +36,58 @@
             });
         }
     };
-
-    export const uploadDocument = async (req, res, next) => {
-        try {
-            if (!req.file) {
-                return res.status(400).json({
-                    success: false,
-                    error: "please upload a pdf file",
-                    statusCode: 400
-                })
-            }
-            const { title } = req.body
-
-            if (!title) {
-                await fs.unlink(req.file.path)
-                return res.status(400).json({
-                    success: false,
-                    error: "please provide a document title",
-                    statusCode: 400
-                })
-            }
-
-            // Construct the url for the uploaded file
-          const baseUrl = `http://localhost:${process.env.PORT || 8000}`;  
-              const fileUrl = `${baseUrl}/uploads/documents/${req.file.filename}`;
-            // Create document record
-            const document = await Document.create({
-                userId: req.user._id,
-                title,
-                fileName: req.file.originalname,
-                filePath: fileUrl,
-                fileSize: req.file.size,
-                status: "processing",
-            });
-
-            // Process PDF in background (now processPDF is defined above)
-            processPDF(document._id, req.file.path).catch(err => {
-                console.error("PDF processing error:", err);
-            });
-
-            res.status(201).json({
-                success: true,
-                data: document,
-                message: "Document uploaded successfully. Processing in progress...",
-            });
-
-        } catch (error) {
-            // Clean up file on error
-            if (req.file) {
-                await fs.unlink(req.file.path).catch(() => {})
-            }
-            next(error)
+export const uploadDocument = async (req, res, next) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                error: "please upload a pdf file",
+                statusCode: 400
+            })
         }
+        const { title } = req.body
+
+        if (!title) {
+            await fs.unlink(req.file.path)
+            return res.status(400).json({
+                success: false,
+                error: "please provide a document title",
+                statusCode: 400
+            })
+        }
+
+        // CRITICAL: Store ONLY the relative path, not full URL
+        const filePath = `/uploads/documents/${req.file.filename}`;
+
+        // Create document record
+        const document = await Document.create({
+            userId: req.user._id,
+            title,
+            fileName: req.file.originalname,
+            filePath: filePath, // Relative path only
+            fileSize: req.file.size,
+            status: "processing",
+        });
+
+        // Process PDF in background
+        processPDF(document._id, req.file.path).catch(err => {
+            console.error("PDF processing error:", err);
+        });
+
+        res.status(201).json({
+            success: true,
+            data: document,
+            message: "Document uploaded successfully. Processing in progress...",
+        });
+
+    } catch (error) {
+        // Clean up file on error
+        if (req.file) {
+            await fs.unlink(req.file.path).catch(() => {})
+        }
+        next(error)
     }
+}
 
     export const getDocuments = async (req, res, next) => {
         try {
