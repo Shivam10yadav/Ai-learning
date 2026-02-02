@@ -166,8 +166,12 @@ const DocumentListPage = () => {
   })
 
   if (loading) {
-    return <Spinner />
-  }
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-black-500 to-red-900 flex items-center justify-center">
+      <Spinner />
+    </div>
+  )
+}
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-black-500 to-red-900 p-3 sm:p-6 lg:p-8 relative overflow-hidden">

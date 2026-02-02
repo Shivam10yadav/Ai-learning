@@ -2,46 +2,14 @@ import React from 'react';
 
 const Spinner = () => {
   return (
-    <div className="relative flex items-center justify-start h-[2.8rem] w-[2.8rem]">
-      <style jsx>{`
-        @keyframes pulse0112 {
-          0%, 100% {
-            transform: scale(0);
-            opacity: 0.5;
-          }
-          50% {
-            transform: scale(1);
-            opacity: 1;
-          }
-        }
-        .dot-spinner__dot::before {
-          content: '';
-          height: 20%;
-          width: 20%;
-          border-radius: 50%;
-          background-color: #183153;
-          transform: scale(0);
-          opacity: 0.5;
-          animation: pulse0112 1s ease-in-out infinite;
-          box-shadow: 0 0 20px rgba(18, 31, 53, 0.3);
-        }
-      `}</style>
-      
-      {[0, 45, 90, 135, 180, 225, 270, 315].map((rotation, index) => (
-        <div
-          key={index}
-          className="dot-spinner__dot absolute top-0 left-0 flex items-center justify-start h-full w-full"
-          style={{
-            transform: `rotate(${rotation}deg)`,
-          }}
-        >
-          <div
-            style={{
-              animationDelay: `${-0.9 * (1 - index / 8)}s`,
-            }}
-          />
-        </div>
-      ))}
+    <div className="w-full max-w-md p-4 space-y-3">
+      <div className="h-4 bg-gray-100 rounded animate-pulse"></div>
+      <div className="h-4 bg-gray-100 rounded animate-pulse w-5/6"></div>
+      <div className="h-4 bg-gray-100 rounded animate-pulse w-4/6"></div>
+      <div className="h-4 bg-gray-100 rounded animate-pulse w-3/4"></div>
+      <div className="h-4 bg-gray-100 rounded animate-pulse w-3/4"></div>
+      <div className="h-4 bg-gray-100 rounded animate-pulse w-3/4"></div>
+      <div className="h-4 bg-gray-100 rounded animate-pulse w-3/4"></div>
     </div>
   );
 };
