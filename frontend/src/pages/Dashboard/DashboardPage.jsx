@@ -170,16 +170,15 @@ const DashboardPage = () => {
           <p className="text-sm sm:text-base text-slate-300">Welcome back! Here's your learning overview</p>
         </div>
 
-        {/* Main Stats Cards - Horizontal scroll on mobile, grid on larger screens */}
-        <div className="overflow-x-auto -mx-3 px-3 sm:mx-0 sm:px-0 pb-2 sm:pb-0">
-          <div className="flex gap-3 sm:gap-4 lg:gap-6 sm:grid sm:grid-cols-3 min-w-max sm:min-w-0">
+        {/* Main Stats Cards - Grid layout that wraps */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
             {stats.map((stat, index) => {
               const Icon = stat.icon
               return (
                 <Link
                   key={index}
                   to={stat.link}
-                  className="group relative overflow-hidden backdrop-blur-xl bg-white/10 rounded-xl sm:rounded-2xl border border-white/20 hover:border-white/30 p-4 sm:p-6 transition-all duration-300 hover:shadow-xl hover:shadow-white/10 flex-shrink-0 w-[200px] sm:w-auto"
+                  className="group relative overflow-hidden backdrop-blur-xl bg-white/10 rounded-xl sm:rounded-2xl border border-white/20 hover:border-white/30 p-4 sm:p-6 transition-all duration-300 hover:shadow-xl hover:shadow-white/10"
                 >
                   <div className="relative flex items-start justify-between">
                     <div className="flex-1">
@@ -203,7 +202,6 @@ const DashboardPage = () => {
                 </Link>
               )
             })}
-          </div>
         </div>
 
         {/* Two Column Layout - Stack on mobile, side-by-side on larger screens */}
@@ -287,11 +285,10 @@ const DashboardPage = () => {
             )}
           </div>
 
-          {/* Quick Stats Sidebar - Horizontal scroll on mobile, column on desktop */}
-          <div className="overflow-x-auto -mx-3 px-3 sm:mx-0 sm:px-0 pb-2 sm:pb-0 lg:overflow-visible">
-            <div className="flex gap-3 sm:gap-4 lg:gap-6 lg:flex-col min-w-max lg:min-w-0">
+          {/* Quick Stats Sidebar - Grid layout on mobile, column on desktop */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-3 sm:gap-4 lg:gap-6">
               {/* Average Score */}
-              <div className="backdrop-blur-xl bg-white/10 rounded-xl sm:rounded-2xl border border-white/20 p-4 sm:p-6 flex-shrink-0 w-[200px] sm:w-auto">
+              <div className="backdrop-blur-xl bg-white/10 rounded-xl sm:rounded-2xl border border-white/20 p-4 sm:p-6">
                 <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                   <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white">
                     <Award className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -310,7 +307,7 @@ const DashboardPage = () => {
               </div>
 
               {/* Flashcard Stats */}
-              <div className="backdrop-blur-xl bg-white/10 rounded-xl sm:rounded-2xl border border-white/20 p-4 sm:p-6 flex-shrink-0 w-[200px] sm:w-auto">
+              <div className="backdrop-blur-xl bg-white/10 rounded-xl sm:rounded-2xl border border-white/20 p-4 sm:p-6">
                 <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                   <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-purple-400 to-pink-500 text-white">
                     <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -340,7 +337,7 @@ const DashboardPage = () => {
               </div>
 
               {/* Study Streak */}
-              <div className="backdrop-blur-xl bg-white/10 rounded-xl sm:rounded-2xl border border-white/20 p-4 sm:p-6 flex-shrink-0 w-[200px] sm:w-auto">
+              <div className="backdrop-blur-xl bg-white/10 rounded-xl sm:rounded-2xl border border-white/20 p-4 sm:p-6">
                 <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                   <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-orange-400 to-red-500 text-white">
                     <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -359,7 +356,7 @@ const DashboardPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    
   )
 }
 

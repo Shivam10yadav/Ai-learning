@@ -110,20 +110,22 @@ const DocumentListPage = () => {
     if (!date) return 'N/A'
     
     const d = new Date(date)
+    const now = new Date()
+    const diffMs = now - d
+    const diffMins = Math.floor(diffMs / 60000)
+    const diffHours = Math.floor(diffMs / 3600000)
+    const diffDays = Math.floor(diffMs / 86400000)
+
+    // For mobile, show relative time if recent
+    if (diffMins < 60) return `${diffMins}m ago`
+    if (diffHours < 24) return `${diffHours}h ago`
+    if (diffDays < 7) return `${diffDays}d ago`
     
-    const dateStr = d.toLocaleDateString('en-US', { 
+    return d.toLocaleDateString('en-US', { 
       month: 'short', 
-      day: 'numeric', 
-      year: 'numeric' 
+      day: 'numeric',
+      year: d.getFullYear() !== now.getFullYear() ? 'numeric' : undefined
     })
-    
-    const timeStr = d.toLocaleTimeString('en-US', { 
-      hour: 'numeric', 
-      minute: '2-digit',
-      hour12: true 
-    })
-    
-    return `${dateStr} • ${timeStr}`
   }
 
   const getStatusColor = (status) => {
@@ -136,9 +138,9 @@ const DocumentListPage = () => {
   }
 
   const getStatusIcon = (status) => {
-    if (status === 'processing') return <Loader2 className="w-4 h-4 animate-spin" />
-    if (status === 'failed') return <FileWarning className="w-4 h-4" />
-    return <FileText className="w-4 h-4" />
+    if (status === 'processing') return <Loader2 className="w-3.5 h-3.5 animate-spin" />
+    if (status === 'failed') return <FileWarning className="w-3.5 h-3.5" />
+    return <FileText className="w-3.5 h-3.5" />
   }
 
   const handleDelete = async (id) => {
@@ -168,7 +170,7 @@ const DocumentListPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-black-500 to-red-900 p-8 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-black-500 to-red-900 p-3 sm:p-6 lg:p-8 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 left-20 w-72 h-72 bg-emerald-500/20 rounded-full blur-3xl animate-pulse"></div>
@@ -176,27 +178,27 @@ const DocumentListPage = () => {
         <div className="absolute top-1/2 left-1/2 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-500"></div>
       </div>
 
-      <div className="space-y-6 relative z-10">
+      <div className="space-y-4 sm:space-y-6 relative z-10 max-w-7xl mx-auto">
         {/* Header */}
-        <div className="backdrop-blur-xl bg-white/10 rounded-2xl border border-white/20 p-6">
+        <div className="backdrop-blur-xl bg-white/10 rounded-xl sm:rounded-2xl border border-white/20 p-4 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-white mb-2">Documents</h1>
-              <p className="text-slate-300">Upload and manage your learning materials</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1 sm:mb-2">Documents</h1>
+              <p className="text-xs sm:text-base text-slate-300">Upload and manage your learning materials</p>
             </div>
           </div>
         </div>
 
         {/* Upload Section */}
-        <div className="backdrop-blur-xl bg-white/10 rounded-2xl border border-white/20 p-4 sm:p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 text-white">
-              <Upload className="w-5 h-5" />
+        <div className="backdrop-blur-xl bg-white/10 rounded-xl sm:rounded-2xl border border-white/20 p-4 sm:p-6">
+          <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+            <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 text-white">
+              <Upload className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <h2 className="text-lg sm:text-xl font-bold text-white">Upload Document</h2>
+            <h2 className="text-base sm:text-lg lg:text-xl font-bold text-white">Upload Document</h2>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {/* File Selection */}
             <div>
               <input
@@ -208,23 +210,23 @@ const DocumentListPage = () => {
               />
               <label
                 htmlFor="file-input"
-                className="flex items-center justify-center w-full px-4 py-6 border-2 border-dashed border-white/30 rounded-xl hover:border-emerald-400/50 hover:bg-emerald-500/10 transition-all duration-200 cursor-pointer group"
+                className="flex items-center justify-center w-full px-4 py-5 sm:py-6 border-2 border-dashed border-white/30 rounded-lg sm:rounded-xl hover:border-emerald-400/50 hover:bg-emerald-500/10 transition-all duration-200 cursor-pointer group"
               >
                 <div className="text-center">
-                  <Upload className="w-8 h-8 text-slate-300 group-hover:text-emerald-300 mx-auto mb-3" />
+                  <Upload className="w-7 h-7 sm:w-8 sm:h-8 text-slate-300 group-hover:text-emerald-300 mx-auto mb-2 sm:mb-3" />
                   {selectedFile ? (
                     <div>
-                      <p className="text-sm font-medium text-white mb-1 px-4 break-words">
+                      <p className="text-xs sm:text-sm font-medium text-white mb-1 px-4 break-words">
                         {selectedFile.name}
                       </p>
-                      <p className="text-xs text-slate-400">{formatFileSize(selectedFile.size)}</p>
+                      <p className="text-[10px] sm:text-xs text-slate-400">{formatFileSize(selectedFile.size)}</p>
                     </div>
                   ) : (
                     <div className="px-4">
-                      <p className="text-sm font-medium text-slate-200">
+                      <p className="text-xs sm:text-sm font-medium text-slate-200">
                         Click to upload or drag and drop
                       </p>
-                      <p className="text-xs text-slate-400 mt-1">
+                      <p className="text-[10px] sm:text-xs text-slate-400 mt-1">
                         PDF, TXT, or DOCX (Max 10MB)
                       </p>
                     </div>
@@ -237,7 +239,7 @@ const DocumentListPage = () => {
             {selectedFile && (
               <div className="space-y-3">
                 <div className="relative">
-                  <label className="block text-sm font-medium text-slate-200 mb-2">
+                  <label className="block text-xs sm:text-sm font-medium text-slate-200 mb-2">
                     Document Title *
                   </label>
                   <div className="relative">
@@ -246,27 +248,27 @@ const DocumentListPage = () => {
                       value={documentTitle}
                       onChange={(e) => setDocumentTitle(e.target.value)}
                       placeholder="Enter document title"
-                      className="w-full px-4 py-3 pr-10 backdrop-blur-sm bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-transparent text-sm sm:text-base text-white placeholder-slate-400"
+                      className="w-full px-3 py-2.5 sm:px-4 sm:py-3 pr-10 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-transparent text-sm sm:text-base text-white placeholder-slate-400"
                     />
-                    <Edit2 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                    <Edit2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-slate-400" />
                   </div>
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
                   <button
                     onClick={handleUpload}
                     disabled={uploading || !documentTitle.trim()}
-                    className="flex-1 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-sm sm:text-base font-medium rounded-xl hover:shadow-lg hover:shadow-emerald-500/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="flex-1 px-4 py-2.5 sm:px-6 sm:py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-xs sm:text-sm font-medium rounded-lg sm:rounded-xl hover:shadow-lg hover:shadow-emerald-500/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {uploading ? (
                       <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
+                        <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
                         Uploading...
                       </>
                     ) : (
                       <>
-                        <Upload className="w-5 h-5" />
+                        <Upload className="w-4 h-4 sm:w-5 sm:h-5" />
                         Upload Document
                       </>
                     )}
@@ -274,9 +276,9 @@ const DocumentListPage = () => {
                   <button
                     onClick={handleRemoveFile}
                     disabled={uploading}
-                    className="px-6 py-3 backdrop-blur-sm bg-white/10 hover:bg-white/20 text-slate-200 text-sm sm:text-base font-medium rounded-xl transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 border border-white/20"
+                    className="px-4 py-2.5 sm:px-6 sm:py-3 backdrop-blur-sm bg-white/10 hover:bg-white/20 text-slate-200 text-xs sm:text-sm font-medium rounded-lg sm:rounded-xl transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 border border-white/20"
                   >
-                    <X className="w-5 h-5" />
+                    <X className="w-4 h-4 sm:w-5 sm:h-5" />
                     Cancel
                   </button>
                 </div>
@@ -286,21 +288,21 @@ const DocumentListPage = () => {
         </div>
 
         {/* Search and Filter */}
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-slate-400" />
             <input
               type="text"
               placeholder="Search documents..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-transparent text-white placeholder-slate-400"
+              className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-2.5 text-sm sm:text-base backdrop-blur-xl bg-white/10 border border-white/20 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-transparent text-white placeholder-slate-400"
             />
           </div>
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="px-4 py-2.5 backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-transparent text-white"
+            className="px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base backdrop-blur-xl bg-white/10 border border-white/20 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-transparent text-white"
           >
             <option value="all" className="bg-slate-800">All Status</option>
             <option value="ready" className="bg-slate-800">Ready</option>
@@ -311,80 +313,79 @@ const DocumentListPage = () => {
 
         {/* Documents List */}
         {filteredDocuments.length === 0 ? (
-          <div className="backdrop-blur-xl bg-white/10 rounded-2xl border border-white/20 p-12 text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 mb-4">
-              <FileText className="w-8 h-8 text-slate-300" />
+          <div className="backdrop-blur-xl bg-white/10 rounded-xl sm:rounded-2xl border border-white/20 p-8 sm:p-12 text-center">
+            <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 mb-3 sm:mb-4">
+              <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300" />
             </div>
-            <h3 className="text-lg font-semibold text-white mb-2">
+            <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
               {searchQuery || filterStatus !== 'all' ? 'No documents found' : 'No documents yet'}
             </h3>
-            <p className="text-slate-300 mb-6">
+            <p className="text-xs sm:text-base text-slate-300 mb-4 sm:mb-6">
               {searchQuery || filterStatus !== 'all'
                 ? 'Try adjusting your search or filters'
                 : 'Upload your first document to get started with AI-powered learning'}
             </p>
           </div>
         ) : (
-          <div className="grid gap-4">
+          <div className="grid gap-3 sm:gap-4">
             {filteredDocuments.map((doc) => (
               <div
                 key={doc._id}
-                className="backdrop-blur-xl bg-white/10 rounded-xl border border-white/20 p-4 sm:p-6 hover:shadow-xl hover:shadow-white/10 hover:border-white/30 transition-all duration-200"
+                className="backdrop-blur-xl bg-white/10 rounded-xl border border-white/20 p-3 sm:p-4 lg:p-6 hover:shadow-xl hover:shadow-white/10 hover:border-white/30 transition-all duration-200"
               >
                 {/* Mobile & Desktop Layout */}
-                <div className="flex flex-col sm:flex-row items-start gap-4">
+                <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
                   {/* Icon */}
-                  <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 text-white shadow-md shadow-blue-500/30 flex-shrink-0">
-                    <FileText className="w-6 h-6" strokeWidth={2.5} />
+                  <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 text-white shadow-md shadow-blue-500/30 flex-shrink-0">
+                    <FileText className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />
                   </div>
 
                   {/* Content */}
                   <div className="flex-1 min-w-0 w-full">
                     {/* Title and Status */}
-                    <div className="flex items-start justify-between gap-3 mb-2">
+                    <div className="flex items-start justify-between gap-2 sm:gap-3 mb-2">
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-base sm:text-lg font-semibold text-white truncate mb-1">
+                        <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-white truncate mb-0.5 sm:mb-1">
                           {doc.title}
                         </h3>
                         <p className="text-xs sm:text-sm text-slate-300 truncate">{doc.fileName}</p>
                       </div>
-                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium whitespace-nowrap backdrop-blur-sm ${getStatusColor(doc.status)}`}>
+                      <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] sm:text-xs font-medium whitespace-nowrap backdrop-blur-sm ${getStatusColor(doc.status)}`}>
                         {getStatusIcon(doc.status)}
-                        <span className="hidden sm:inline">{doc.status.charAt(0).toUpperCase() + doc.status.slice(1)}</span>
+                        <span>{doc.status.charAt(0).toUpperCase() + doc.status.slice(1)}</span>
                       </span>
                     </div>
 
                     {/* Meta Info */}
-                    <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-slate-300 mb-4">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[10px] sm:text-xs text-slate-300 mb-3 sm:mb-4">
                       <span className="flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                        <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                         <span className="truncate">{formatDate(doc.uploadDate || doc.createdAt)}</span>
                       </span>
                       <span className="whitespace-nowrap">{formatFileSize(doc.fileSize)}</span>
                     </div>
 
                     {/* Actions */}
-                    <div className="grid grid-cols-3 sm:flex sm:flex-wrap gap-2">
+                    <div className="grid grid-cols-3 gap-2">
                       <Link
                         to={`/documents/${doc._id}`}
-                        className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 backdrop-blur-sm bg-white/10 hover:bg-white/20 text-slate-200 text-xs sm:text-sm font-medium rounded-lg transition-colors duration-200 border border-white/20"
+                        className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-2 backdrop-blur-sm bg-white/10 hover:bg-white/20 text-slate-200 text-[10px] sm:text-xs font-medium rounded-lg transition-colors duration-200 border border-white/20"
                       >
-                        <Eye className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                        <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                         <span>View</span>
                       </Link>
                       <Link
                         to={`/documents/${doc._id}/flashcards`}
-                        className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 text-xs sm:text-sm font-medium rounded-lg transition-colors duration-200 border border-purple-400/30"
+                        className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 text-[10px] sm:text-xs font-medium rounded-lg transition-colors duration-200 border border-purple-400/30"
                       >
-                        <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                        <span className="hidden sm:inline">Flashcards</span>
-                        <span className="sm:hidden">Cards</span>
+                        <BookOpen className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                        <span>Cards</span>
                       </Link>
                       <button
                         onClick={() => handleDelete(doc._id)}
-                        className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-300 text-xs sm:text-sm font-medium rounded-lg transition-colors duration-200 border border-red-400/30"
+                        className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-300 text-[10px] sm:text-xs font-medium rounded-lg transition-colors duration-200 border border-red-400/30"
                       >
-                        <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                        <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                         <span>Delete</span>
                       </button>
                     </div>

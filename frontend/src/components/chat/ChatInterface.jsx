@@ -82,29 +82,29 @@ const ChatInterface = () => {
   const renderMessage = (msg, index) => {
     const isUser = msg.role === 'user'
     return (
-      <div key={index} className={`flex items-start gap-3 my-4 ${isUser ? 'justify-end' : ''}`}>
+      <div key={index} className={`flex items-start gap-2 sm:gap-3 my-3 sm:my-4 ${isUser ? 'justify-end' : ''}`}>
         {!isUser && (
-          <div className="w-9 h-9 rounded-full flex items-center justify-center bg-gradient-to-br from-emerald-500 to-teal-500">
-            <Sparkles className="text-white" strokeWidth={2} size={18} />
+          <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full flex items-center justify-center bg-gradient-to-br from-emerald-500 to-teal-500 flex-shrink-0">
+            <Sparkles className="text-white w-4 h-4 sm:w-[18px] sm:h-[18px]" strokeWidth={2} />
           </div>
         )}
         
-        <div className={`max-w-lg p-4 rounded-2xl shadow-sm ${
+        <div className={`max-w-[85%] sm:max-w-lg p-3 sm:p-4 rounded-2xl shadow-sm ${
           isUser 
           ? 'bg-gradient-to-br from-emerald-500 to-teal-500 text-white rounded-br-md' 
           : 'bg-slate-800 border border-slate-700 text-slate-100 rounded-bl-md'
         }`}>
           {isUser ? (
-            <p className="">{msg.content}</p>
+            <p className="text-sm sm:text-base break-words">{msg.content}</p>
           ) : (
-            <div className="">
+            <div className="prose prose-sm sm:prose-base prose-invert max-w-none">
               <MarkdownRenderer content={msg.content} />
             </div>
           )}
         </div>
 
         {isUser && (
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white font-medium">
+          <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white font-medium text-xs sm:text-sm flex-shrink-0">
             {user?.username?.charAt(0).toUpperCase() || 'U'}
           </div>
         )}
@@ -114,12 +114,12 @@ const ChatInterface = () => {
 
   if (initialLoading) {
     return (
-      <div className="flex flex-col h-[70vh] bg-slate-900 border border-slate-700 rounded-2xl items-center justify-center shadow-xl">
-        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mb-4">
-          <MessageSquare className="w-7 h-7 text-white" strokeWidth={2} />
+      <div className="flex flex-col h-[60vh] sm:h-[70vh] bg-slate-900 border border-slate-700 rounded-xl sm:rounded-2xl items-center justify-center shadow-xl">
+        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mb-3 sm:mb-4">
+          <MessageSquare className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={2} />
         </div>
         <Spinner />
-        <p className="text-sm text-slate-400 mt-3 font-medium">
+        <p className="text-xs sm:text-sm text-slate-400 mt-2 sm:mt-3 font-medium">
           Loading chat history...
         </p>
       </div>
@@ -127,19 +127,19 @@ const ChatInterface = () => {
   }
 
   return (
-    <div className="flex flex-col h-[70vh] bg-slate-900 border border-slate-700 rounded-2xl shadow-xl overflow-hidden">
+    <div className="flex flex-col h-[60vh] sm:h-[70vh] bg-slate-900 border border-slate-700 rounded-xl sm:rounded-2xl shadow-xl overflow-hidden">
       
       {/* messages */}
-      <div className="flex-1 p-6 overflow-y-auto bg-slate-900">
+      <div className="flex-1 p-3 sm:p-4 lg:p-6 overflow-y-auto bg-slate-900">
         {history.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-center">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/20">
-              <MessageSquare className="w-8 h-8 text-white" strokeWidth={2} />
+          <div className="flex flex-col items-center justify-center h-full text-center px-4">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mb-3 sm:mb-4 shadow-lg shadow-emerald-500/20">
+              <MessageSquare className="w-6 h-6 sm:w-8 sm:h-8 text-white" strokeWidth={2} />
             </div>
-            <h3 className="text-base font-semibold text-white mb-2">
+            <h3 className="text-sm sm:text-base font-semibold text-white mb-1 sm:mb-2">
               Start a conversation
             </h3>
-            <p className="text-slate-400">
+            <p className="text-xs sm:text-sm text-slate-400">
               Ask me anything about the document
             </p>
           </div>
@@ -150,18 +150,18 @@ const ChatInterface = () => {
         <div ref={messagesEndRef} />
 
         {loading && (
-          <div className="flex items-start gap-3 mt-4">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
+          <div className="flex items-start gap-2 sm:gap-3 mt-3 sm:mt-4">
+            <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
               <Sparkles className="w-4 h-4 text-white animate-pulse" />
             </div>
             <div className="flex gap-1 mt-2">
-              <span className="w-2 h-2 bg-slate-500 rounded-full animate-bounce" />
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-slate-500 rounded-full animate-bounce" />
               <span
-                className="w-2 h-2 bg-slate-500 rounded-full animate-bounce"
+                className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-slate-500 rounded-full animate-bounce"
                 style={{ animationDelay: "150ms" }}
               />
               <span
-                className="w-2 h-2 bg-slate-500 rounded-full animate-bounce"
+                className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-slate-500 rounded-full animate-bounce"
                 style={{ animationDelay: "300ms" }}
               />
             </div>
@@ -172,27 +172,27 @@ const ChatInterface = () => {
       {/* input */}
       <form
         onSubmit={handleSendMessage}
-        className="border-t border-slate-700 bg-slate-800 p-4 flex flex-col gap-3"
+        className="border-t border-slate-700 bg-slate-800 p-3 sm:p-4 flex flex-col gap-2 sm:gap-3"
       >
-        <div className="flex gap-3">
+        <div className="flex gap-2 sm:gap-3">
           <input
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Ask something…"
-            className="flex-1 rounded-xl border border-slate-700 bg-slate-900 px-4 py-2 text-white placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50"
+            className="flex-1 rounded-lg sm:rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 sm:px-4 text-sm sm:text-base text-white placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50"
           />
 
           <button
             type="submit"
             disabled={loading}
-            className="w-11 h-11 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white flex items-center justify-center disabled:opacity-50 hover:shadow-lg hover:shadow-emerald-500/20 transition"
+            className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white flex items-center justify-center disabled:opacity-50 hover:shadow-lg hover:shadow-emerald-500/20 transition flex-shrink-0"
           >
-            <Send className="w-5 h-5" />
+            <Send className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
         
         {/* AI Disclaimer */}
-        <p className="text-xs text-slate-500 text-center">
+        <p className="text-[10px] sm:text-xs text-slate-500 text-center px-2">
           <span className="font-bold">AI can make mistakes.</span> Please verify important information.
         </p>
       </form>
