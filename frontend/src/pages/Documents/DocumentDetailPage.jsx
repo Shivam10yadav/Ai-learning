@@ -55,47 +55,46 @@ const DocumentDetailPage = () => {
 };
 
   const renderContent = () => {
-    if (!document || !document.data || !document.data.filePath) {
-      return (
-        <div className="text-center py-6 sm:py-8 backdrop-blur-xl bg-white/10 rounded-xl sm:rounded-2xl border border-white/20 p-6 sm:p-8">
-          <p className="text-sm sm:text-base text-slate-300">PDF not available</p>
-        </div>
-      );
-    }
-
-    const pdfUrl = getPdfUrl();
-
+  if (!document || !document.data || !document.data.filePath) {
     return (
-      <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl">
-        <div className="flex items-center justify-between p-3 sm:p-4 bg-white/5 border-b border-white/10">
-          <span className="text-xs sm:text-sm font-medium text-slate-200">
-            Document Viewer
-          </span>
-          <a
-            href={pdfUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm text-emerald-300 hover:text-emerald-200 font-medium transition-colors"
-          >
-            <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
-            <span className="hidden sm:inline">Open in new tab</span>
-            <span className="sm:hidden">Open</span>
-          </a>
-        </div>
-        <div className="bg-white/5 p-0.5 sm:p-1">
-          <iframe
-            src={pdfUrl}
-            className="w-full h-[60vh] sm:h-[70vh] bg-white rounded border border-white/20"
-            title="PDF Viewer"
-            frameBorder="0"
-            style={{
-              colorScheme: "light",
-            }}
-          />
-        </div>
+      <div className="text-center py-6 sm:py-8 backdrop-blur-xl bg-white/10 rounded-xl sm:rounded-2xl border border-white/20 p-6 sm:p-8">
+        <p className="text-sm sm:text-base text-slate-300">PDF not available</p>
       </div>
     );
-  };
+  }
+
+  const pdfUrl = getPdfUrl();
+
+  return (
+    <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl">
+      <div className="flex items-center justify-between p-3 sm:p-4 bg-white/5 border-b border-white/10">
+        <span className="text-xs sm:text-sm font-medium text-slate-200">
+          Document Viewer
+        </span>
+        <a
+          href={pdfUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm text-emerald-300 hover:text-emerald-200 font-medium transition-colors"
+        >
+          <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
+          <span className="hidden sm:inline">Open in new tab</span>
+          <span className="sm:hidden">Open</span>
+        </a>
+      </div>
+      <div className="bg-white/5 p-0.5 sm:p-1">
+        <iframe
+          src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+          className="w-full h-[60vh] sm:h-[70vh] bg-white rounded border border-white/20"
+          title="PDF Viewer"
+          type="application/pdf"
+          frameBorder="0"
+          allow="fullscreen"
+        />
+      </div>
+    </div>
+  );
+};
 
   const renderChat = () => {
     return <ChatInterface />;
