@@ -143,7 +143,7 @@ export const generateSummary = async(text) => {
     const prompt = `Provide a concise summary of the following text, highlighting the key concepts, main ideas, and important points. Keep the summary clear and structured.
     
     Text:
-    ${text.substring(0, 20000)}`;
+    ${text.substring(0, 8000)}`;
 
     try {
         const response = await ai.models.generateContent({

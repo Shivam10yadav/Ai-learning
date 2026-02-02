@@ -30,9 +30,16 @@ connectDB()
 
 //midddleware to handle cors
 
+//middleware to handle cors
+
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://flashmind-slhb.onrender.com'
+];
+
 app.use(
     cors({
-        origin: process.env.FRONTEND_URL || "*",
+        origin: allowedOrigins,
         methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["content-type", "Authorization"],
         credentials: true

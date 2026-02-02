@@ -1,5 +1,5 @@
 
-export const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000"
+export const BASE_URL = import.meta.env.VITE_API_URL || "https://flashmind-backend-3lji.onrender.com"
 export const API_PATHS={
     AUTH:{
         REGISTER:"/api/auth/register",
