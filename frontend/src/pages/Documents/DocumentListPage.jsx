@@ -378,7 +378,7 @@ const DocumentListPage = () => {
                     </div>
 
                     {/* Actions */}
-                    <div className="grid grid-cols-3 gap-2">
+                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                       <Link
                         to={`/documents/${doc._id}`}
                         className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-2 backdrop-blur-sm bg-white/10 hover:bg-white/20 text-slate-200 text-[10px] sm:text-xs font-medium rounded-lg transition-colors duration-200 border border-white/20"

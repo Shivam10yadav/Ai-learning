@@ -64,6 +64,7 @@ const DocumentDetailPage = () => {
   }
 
   const pdfUrl = getPdfUrl();
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   return (
     <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl">
@@ -83,14 +84,39 @@ const DocumentDetailPage = () => {
         </a>
       </div>
       <div className="bg-white/5 p-0.5 sm:p-1">
-        <iframe
-          src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
-          className="w-full h-[60vh] sm:h-[70vh] bg-white rounded border border-white/20"
-          title="PDF Viewer"
-          type="application/pdf"
-          frameBorder="0"
-          allow="fullscreen"
-        />
+        {isMobile ? (
+          // Mobile fallback - show direct link
+          <div className="flex flex-col items-center justify-center h-[60vh] bg-white rounded border border-white/20 p-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-500/10 mb-4">
+              <FileText className="w-8 h-8 text-blue-400" />
+            </div>
+            <h3 className="text-lg font-semibold text-slate-800 mb-2">
+              {document.data.fileName}
+            </h3>
+            <p className="text-sm text-slate-600 mb-6 text-center">
+              Tap the button below to view the PDF
+            </p>
+            <a
+              href={pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-sm font-medium rounded-xl hover:shadow-lg transition"
+            >
+              <ExternalLink className="w-4 h-4" />
+              Open PDF
+            </a>
+          </div>
+        ) : (
+          // Desktop - use iframe
+          <iframe
+            src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+            className="w-full h-[60vh] sm:h-[70vh] bg-white rounded border border-white/20"
+            title="PDF Viewer"
+            type="application/pdf"
+            frameBorder="0"
+            allow="fullscreen"
+          />
+        )}
       </div>
     </div>
   );

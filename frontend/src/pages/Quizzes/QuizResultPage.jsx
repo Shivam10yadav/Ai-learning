@@ -94,13 +94,7 @@ const QuizResultPage = () => {
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
-          <StatCard icon={<TrendingUp size={18} />} label="Score" value={`${percentage}%`} />
-          <StatCard icon={<CheckCircle size={18} />} label="Correct" value={score} green />
-          <StatCard icon={<XCircle size={18} />} label="Wrong" value={wrongAnswers.length} red />
-        </div>
-
+     
         {/* Wrong Answers */}
         {wrongAnswers.length > 0 && (
           <div className="mb-6">
@@ -154,20 +148,25 @@ const QuizResultPage = () => {
         )}
 
         {/* Sticky Action Bar */}
-        <div className="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur border-t border-slate-700 p-3 flex gap-3">
-          <button
-            onClick={() => navigate(-1)}
-            className="flex-1 h-12 bg-slate-800 border border-slate-700 text-white rounded-xl"
-          >
-            Back
-          </button>
-          <button
-            onClick={() => window.location.reload()}
-            className="flex-1 h-12 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl font-semibold"
-          >
-            Retake
-          </button>
-        </div>
+       <div className="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur border-t border-slate-700 py-2 flex justify-center">
+  <div className="flex gap-4">
+    <button
+      onClick={() => navigate(-1)}
+      className="px-6 h-9 bg-slate-800 border border-slate-700 text-white rounded-lg text-sm"
+    >
+      Back
+    </button>
+
+    <button
+      onClick={() => window.location.reload()}
+      className="px-6 h-9 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg text-sm font-semibold"
+    >
+      Retake
+    </button>
+  </div>
+</div>
+
+
       </div>
     </div>
   );
