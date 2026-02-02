@@ -8,7 +8,7 @@ import {
   getChatHistory
 } from '../controllers/aiController.js'
 import protect from '../middleware/authMiddleware.js'
-// import geminiRateLimiter from '../middleware/RateLimiter.js'
+
 
 const router = express.Router()
 

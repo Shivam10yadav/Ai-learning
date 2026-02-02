@@ -7,7 +7,7 @@ import {
     deleteQuiz
 } from '../controllers/quizController.js'
 import protect from '../middleware/authMiddleware.js'
-
+//quiz
 const router=express.Router()
 
 router.use(protect)
