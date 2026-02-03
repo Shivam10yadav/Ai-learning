@@ -59,8 +59,8 @@ if (process.env.NODE_ENV === 'production') {
     // Serve static files
     app.use(express.static(path.join(__dirname, 'client/build')));
     
-    // Catch-all handler to serve React app for any route that's not an API route
-    app.get('*', (req, res) => {
+    // Catch-all handler - use /.* instead of *
+    app.get(/.*/, (req, res) => {
         res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
     });
 } else {
