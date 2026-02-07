@@ -220,7 +220,7 @@ export const updateProfile = async (req, res, next) => {
 
 //desc change password
 //routes get /api/auth/change-password
-//access private
+//access private 
 
 export const changePassword=async(req,res,next)=>{
      try {
